@@ -1,8 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Standard Assets\Character Controllers\Sources\Scripts\ThirdPersonController.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\gatewayTrigger.js">
     <Files>
       <File FileName="Assets\Standard Assets\Character Controllers\Sources\Scripts\ThirdPersonController.js" Line="193" Column="42" />
+      <File FileName="Assets\gatewayTrigger.js" Line="56" Column="2" />
+      <File FileName="..\..\Trajans-GameOLD\Unity Project Files\Assets\gatewayTrigger.js" Line="21" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
