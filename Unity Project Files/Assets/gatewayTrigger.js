@@ -17,10 +17,7 @@ private var distanceToRaiseDoor : double;
 function OnTriggerEnter (col : Collider) {
 	if (col.gameObject.tag == "Player" ) {
 		doorRaising = true;
-		
-
 	}
-	
 }
 
 function Start () {
@@ -37,7 +34,6 @@ if (doorRaising){
 		transform.position = Vector3(origX,origY+ distanceToRaiseDoor*timeSinceDoorStartOpen,origZ);
 		}
 	else if (timeSinceDoorStartOpen >= timeToRaiseDoor){
-
 		doorRaising = false;
 		doorLowering = true;
 		timeSinceDoorStartOpen = 0;
@@ -49,8 +45,7 @@ else{
 	if (doorLowering){
 		if (timeSinceDoorEndOpen >= timeToKeepDoorOpen){
 			transform.position = Vector3(origX,origY,origZ);
+			}
 		}
-
 	}
-}
 }
