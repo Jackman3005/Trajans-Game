@@ -6,7 +6,7 @@ public var timeToKeepDoorOpen : double = 3;
 private var doorRaising : boolean = false;
 private var doorLowering : boolean = false;
 private var timeSinceDoorStartOpen : double  = 0;
-private var timeSinceDoorEndOpen : double  = 0;
+private var timeSinceDoorStartClose : double  = 0;
 
 
 private var origX : double;
@@ -28,24 +28,34 @@ function Start () {
 }
 
 function Update () {
-if (doorRaising){
-
-	if (timeSinceDoorStartOpen < timeToRaiseDoor){
-		transform.position = Vector3(origX,origY+ distanceToRaiseDoor*timeSinceDoorStartOpen,origZ);
-		}
-	else if (timeSinceDoorStartOpen >= timeToRaiseDoor){
-		doorRaising = false;
-		doorLowering = true;
-		timeSinceDoorStartOpen = 0;
-		timeSinceDoorEndOpen = 0;
-	}
-	timeSinceDoorStartOpen += Time.deltaTime;
-}
-else{
-	if (doorLowering){
-		if (timeSinceDoorEndOpen >= timeToKeepDoorOpen){
-			transform.position = Vector3(origX,origY,origZ);
+	if (doorRaising){
+	
+		if (timeSinceDoorStartOpen < timeToRaiseDoor){
+			transform.position = Vector3(origX,origY+ distanceToRaiseDoor*timeSinceDoorStartOpen,origZ);
 			}
+		else if (timeSinceDoorStartOpen >= timeToRaiseDoor){
+			doorRaising = false;
+			timeSinceDoorStartOpen = 0;
+			WaitThenLowerDoor();
+			}
+		timeSinceDoorStartOpen += Time.deltaTime;
+	}
+	else{
+		if (doorLowering && timeSinceDoorStartClose <= timeToRaiseDoor){
+			
+			var newDoorYPosition : double = origY + (distanceToRaiseDoor * timeToRaiseDoor) - (distanceToRaiseDoor*timeSinceDoorStartClose);
+					
+			transform.position = Vector3(origX,newDoorYPosition,origZ);
+			
+			timeSinceDoorStartClose += Time.deltaTime;
 		}
 	}
+}
+
+
+function WaitThenLowerDoor(){
+
+		yield WaitForSeconds(2);
+		doorLowering = true;
+		timeSinceDoorStartClose = 0;
 }
