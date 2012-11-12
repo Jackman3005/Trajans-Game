@@ -1,8 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\SimpleUpdateOverHead.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Standard Assets\Scripts\InGameGUI.js">
     <Files>
-      <File FileName="Assets\SimpleUpdateOverHead.js" Line="13" Column="52" />
+      <File FileName="Assets\Standard Assets\Scripts\PlayerController.js" Line="32" Column="30" />
+      <File FileName="Assets\Standard Assets\Scripts\InGameGUI.js" Line="107" Column="2" />
+      <File FileName="Assets\Standard Assets\Scripts\MainMenuGUI.js" Line="26" Column="38" />
+      <File FileName="Assets\Standard Assets\Scripts\General Scripts\GameObjectives.js" Line="3" Column="19" />
+      <File FileName="Assets\PlayerIcon.js" Line="3" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
