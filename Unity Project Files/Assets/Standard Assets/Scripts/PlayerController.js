@@ -2,16 +2,27 @@
 
 var GUI:InGameGUI;
 var player : GameObject;
+var threeCam : GameObject;
+var AllowMouseMovement:boolean;
 
 function Start () 
 {
+	AllowMouseMovement = true;
 	GUI = GameObject.FindWithTag("GUI").GetComponent(InGameGUI);
 	player = GameObject.FindGameObjectWithTag("Player");
+	threeCam = GameObject.FindGameObjectWithTag("3rd Perspective");
 	player.animation.Play("idle");
+	
 }
 
 function Update () 
 {
+
+	if(Input.GetKeyDown(KeyCode.Tab))
+	{
+		threeCam.camera.enabled = !threeCam.camera.enabled;
+	}
+
 	if(Input.GetKeyDown("w"))
 	{
 		player.animation.Play("walk");

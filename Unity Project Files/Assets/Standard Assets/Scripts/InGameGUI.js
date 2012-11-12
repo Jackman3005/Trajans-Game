@@ -3,6 +3,12 @@
 var guiMode:String = "InGame";
 var EnemiesDefeated:int;
 var levelTotal:int;
+//var player : GameObject; 
+
+function start()
+{
+	//player = GameObject.FindGameObjectWithTag("Player"); 
+}
 
 function Update()
 {
@@ -24,8 +30,9 @@ function OnGUI()
 		{//distance from left, distance from top, width, height
 		
 			Time.timeScale = 1;
-			
+
 			guiMode = "InGame";
+			
 			
 			print("Resume Game");
 		}
