@@ -36,13 +36,13 @@ function LateUpdate () {
 	var currentHeight = transform.position.y;
 	
 	// Damp the rotation around the y-axis
-	currentRotationAngle = Mathf.LerpAngle (currentRotationAngle, wantedRotationAngle, rotationDamping * Time.deltaTime);
+	//currentRotationAngle = Mathf.LerpAngle (currentRotationAngle, wantedRotationAngle, rotationDamping * Time.deltaTime);
 
 	// Damp the height
-	currentHeight = Mathf.Lerp (currentHeight, wantedHeight, heightDamping * Time.deltaTime);
+	currentHeight = Mathf.Lerp (currentHeight, wantedHeight, 1);
 
 	// Convert the angle into a rotation
-	var currentRotation = Quaternion.Euler (0, currentRotationAngle, 0);
+	var currentRotation = Quaternion.Euler (0, wantedRotationAngle, 0);
 	
 	// Set the position of the camera on the x-z plane to:
 	// distance meters behind the target
