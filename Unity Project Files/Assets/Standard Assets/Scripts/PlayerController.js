@@ -4,6 +4,8 @@ var GUI:InGameGUI;
 var player : GameObject;
 var threeCam : GameObject;
 var AllowMouseMovement:boolean;
+var walking:AudioClip;
+var running:AudioClip;
 
 function Start () 
 {
@@ -30,31 +32,47 @@ function Update ()
 	}
 	else if(player.transform.position.y < 51.5 && !Input.GetKey("space"))
 	{
-		
-		
-		if(Input.GetKey("w"))
+ 		if(Input.GetKeyDown(KeyCode.Tab))
 		{
-			player.animation.Play("walk");
+			threeCam.camera.enabled = !threeCam.camera.enabled;
 		}
-		else if (Input.GetKey("a")){
-			player.animation.Play("walk");
-		}
-		else if (Input.GetKey("d")){
-			player.animation.Play("walk");
-		}
-		else if (Input.GetKey("s")){
-			player.animation.Play("walk");
-		}
-		else if(Input.GetKey(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.LeftShift))
+
+		if(Input.GetKeyDown("w") || Input.GetKeyDown("a") || Input.GetKeyDown("s") || Input.GetKeyDown("d"))
 		{
+			audio.clip = walking;
+			audio.Play();
+			player.animation.Play("walk");
+		}
+
+		if(Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.LeftShift))
+		{
+			audio.clip = running;
 			player.animation.Play("run");
 		}
-		else {
+
+		if(Input.GetKeyDown("space"))
+		{
+			player.animation.Play("jump_pose");
+		}
+
+		if(player.transform.position.y > 52 && Input.GetKeyUp("space"))
+		{
+			audio.Stop();
+			player.animation.Play("idle");
+		}
+
+		if(Input.GetKeyUp("w") ||
+		Input.GetKeyUp(KeyCode.LeftShift) ||
+		Input.GetKeyUp(KeyCode.LeftShift)
+		)
+		{
+			audio.Stop();
 			player.animation.Play("idle");
 		}
 		
 	}
-	else{
+	else
+	{
 		
 	}
 	
