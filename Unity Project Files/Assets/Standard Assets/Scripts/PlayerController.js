@@ -43,6 +43,12 @@ function Update ()
 			audio.Play();
 			player.animation.Play("walk");
 		}
+		
+		if(Input.GetKeyUp("w") || Input.GetKeyUp("a") || Input.GetKeyUp("s") || Input.GetKeyUp("d"))
+		{
+			audio.Stop();
+			player.animation.Play("idle");
+		}
 
 		if(Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.LeftShift))
 		{
