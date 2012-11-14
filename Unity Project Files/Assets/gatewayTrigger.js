@@ -7,7 +7,7 @@ private var doorRaising : boolean = false;
 private var doorLowering : boolean = false;
 private var timeSinceDoorStartOpen : double  = 0;
 private var timeSinceDoorStartClose : double  = 0;
-
+public var move : AudioClip;
 
 private var origX : double;
 private var origY : double;
@@ -17,6 +17,8 @@ private var distanceToRaiseDoor : double;
 function OnTriggerEnter (col : Collider) {
 	if (col.gameObject.tag == "Player" ) {
 		doorRaising = true;
+		audio.clip = move;
+		audio.Play();
 	}
 }
 
@@ -36,13 +38,13 @@ function Update () {
 		else if (timeSinceDoorStartOpen >= timeToRaiseDoor){
 			doorRaising = false;
 			timeSinceDoorStartOpen = 0;
+			audio.Stop();
 			WaitThenLowerDoor();
 			}
 		timeSinceDoorStartOpen += Time.deltaTime;
 	}
 	else{
 		if (doorLowering && timeSinceDoorStartClose <= timeToRaiseDoor){
-			
 			var newDoorYPosition : double = origY + (distanceToRaiseDoor * timeToRaiseDoor) - (distanceToRaiseDoor*timeSinceDoorStartClose);
 					
 			transform.position = Vector3(origX,newDoorYPosition,origZ);
@@ -54,8 +56,8 @@ function Update () {
 
 
 function WaitThenLowerDoor(){
-
 		yield WaitForSeconds(2);
+		audio.Play();
 		doorLowering = true;
 		timeSinceDoorStartClose = 0;
 }
