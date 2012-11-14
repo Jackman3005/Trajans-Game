@@ -7,6 +7,7 @@ var AllowMouseMovement:boolean;
 var holdW:boolean;
 var walking:AudioClip;
 var running:AudioClip;
+var idle :AudioClip;
 
 function Start () 
 {
@@ -50,7 +51,8 @@ function Update ()
 		if(Input.GetKeyUp("w") || Input.GetKeyUp("a") || Input.GetKeyUp("s") || Input.GetKeyUp("d"))
 		{
 			holdW = false;
-			audio.Stop();
+			audio.clip = idle;
+			audio.Play();
 			player.animation.Play("idle");
 		}
 
