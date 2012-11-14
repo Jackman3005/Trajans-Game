@@ -47,6 +47,7 @@ function Update ()
 		if(Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.LeftShift))
 		{
 			audio.clip = running;
+			audio.Play();
 			player.animation.Play("run");
 		}
 
