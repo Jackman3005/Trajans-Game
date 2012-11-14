@@ -4,6 +4,7 @@ var GUI:InGameGUI;
 var player : GameObject;
 var threeCam : GameObject;
 var AllowMouseMovement:boolean;
+var holdW:boolean;
 var walking:AudioClip;
 var running:AudioClip;
 
@@ -14,6 +15,7 @@ function Start ()
 	player = GameObject.FindGameObjectWithTag("Player");
 	threeCam = GameObject.FindGameObjectWithTag("3rd Perspective");
 	threeCam.camera.enabled = true;
+	holdW = false;
 	player.animation.Play("idle");
 	
 }
@@ -42,10 +44,12 @@ function Update ()
 			audio.clip = walking;
 			audio.Play();
 			player.animation.Play("walk");
+			holdW = true;
 		}
 		
 		if(Input.GetKeyUp("w") || Input.GetKeyUp("a") || Input.GetKeyUp("s") || Input.GetKeyUp("d"))
 		{
+			holdW = false;
 			audio.Stop();
 			player.animation.Play("idle");
 		}
@@ -55,6 +59,13 @@ function Update ()
 			audio.clip = running;
 			audio.Play();
 			player.animation.Play("run");
+		}
+		
+		if(Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.LeftShift) && holdW)
+		{
+			audio.clip = walking;
+			audio.Play();
+			player.animation.Play("walk");
 		}
 
 		if(Input.GetKeyDown("space"))
@@ -67,16 +78,6 @@ function Update ()
 			audio.Stop();
 			player.animation.Play("idle");
 		}
-
-		if(Input.GetKeyUp("w") ||
-		Input.GetKeyUp(KeyCode.LeftShift) ||
-		Input.GetKeyUp(KeyCode.LeftShift)
-		)
-		{
-			audio.Stop();
-			player.animation.Play("idle");
-		}
-		
 	}
 	else
 	{
