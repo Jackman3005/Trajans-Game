@@ -2,13 +2,13 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Standard Assets\Scripts\PlayerController.js">
     <Files>
-      <File FileName="Assets\Standard Assets\Scripts\PlayerController.js" Line="53" Column="18" />
+      <File FileName="Assets\Standard Assets\Scripts\PlayerController.js" Line="25" Column="2" />
       <File FileName="Assets\Standard Assets\Character Controllers\Sources\Scripts\ThirdPersonCamera.js" Line="1" Column="1" />
       <File FileName="Assets\Standard Assets\Scripts\InGameGUI.js" Line="1" Column="1" />
       <File FileName="Assets\Standard Assets\Scripts\MainMenuGUI.js" Line="1" Column="1" />
       <File FileName="Assets\Standard Assets\Scripts\General Scripts\GameObjectives.js" Line="1" Column="1" />
       <File FileName="Assets\Standard Assets\Character Controllers\Sources\Scripts\ThirdPersonController.js" Line="1" Column="1" />
-      <File FileName="Assets\gatewayTrigger.js" Line="60" Column="16" />
+      <File FileName="Assets\gatewayTrigger.js" Line="1" Column="1" />
       <File FileName="Assets\PlayerIcon.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
