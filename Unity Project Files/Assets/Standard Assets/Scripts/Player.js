@@ -8,7 +8,7 @@ private static var playerIsDead : boolean;
 function Start () {
 	currentHealth = maximumHealth;
 	playerIsDead = false;
-	reduceHealthEachSecond();
+	//reduceHealthEachSecond();
 }
 
 function reduceHealthEachSecond(){
