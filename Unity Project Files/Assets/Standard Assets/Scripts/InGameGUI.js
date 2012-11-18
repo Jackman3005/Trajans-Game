@@ -1,6 +1,6 @@
 #pragma strict
 
-var guiMode:String = "InGame";
+static var guiMode:String = "InGame";
 var EnemiesDefeated:int;
 var levelTotal:int;
 //var player : GameObject; 
@@ -22,8 +22,25 @@ function Update()
 
 function OnGUI()
 {
+
+	
 	if(guiMode == "Paused")
 	{
+		pausedGui();
+	}
+
+	if(guiMode == "Win")
+	{
+		winGui();
+	}
+	
+	if(guiMode == "Lose")
+	{
+		loseGui();
+	}
+}
+
+function pausedGui(){
 		//Resume
 		if(GUI.Button(Rect((Screen.width/2)-75,
 		(Screen.height/2)-20,150,30),"Resume"))
@@ -45,10 +62,10 @@ function OnGUI()
 			Application.LoadLevel(0);
 			print("Quitting To Main Menu...");
 		}
-	}
+}
 
-	if(guiMode == "Win")
-	{
+function winGui(){
+
 		//Next Level
 		if(GUI.Button(Rect((Screen.width/2)-75,
 		(Screen.height/2)-20,150,30),"Next Level"))
@@ -68,10 +85,10 @@ function OnGUI()
 			Application.LoadLevel(0);
 			print("Quitting To Main Menu...");
 		}
-	}
-	
-	if(guiMode == "Lose")
-	{
+}
+
+function loseGui(){
+
 		//Next Level
 		if(GUI.Button(Rect((Screen.width/2)-75,
 		(Screen.height/2)-20,150,30),"Retry Level"))
@@ -91,7 +108,6 @@ function OnGUI()
 			Application.LoadLevel(0);
 			print("Quitting To Main Menu...");
 		}
-	}
 }
 
 function EnemyDefeated()
