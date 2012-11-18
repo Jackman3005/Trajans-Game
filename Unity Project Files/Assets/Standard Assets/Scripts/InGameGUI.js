@@ -27,28 +27,28 @@ function Update()
 
 function OnGUI()
 {
-	GUI.Box(Rect( (Screen.width/2)-190,Screen.height-125,100,125),"");//, leftHand);
+	GUI.Box(Rect( (Screen.width/2)-190,Screen.height-125,100,125),"");
 	GUI.DrawTexture(new Rect((Screen.width/2)-186,Screen.height-121,92, 117),leftHand
 	,ScaleMode.StretchToFill, true, 100.0F);
 	
 	
-	GUI.Box(Rect( (Screen.width/2)-90 ,Screen.height-60,60,60), move1);
-	GUI.DrawTexture(new Rect((Screen.width/2)-86,Screen.height-56,92, 117),move1
+	GUI.Box(Rect( (Screen.width/2)-90 ,Screen.height-60,60,60),"");
+	GUI.DrawTexture(new Rect((Screen.width/2)-86,Screen.height-56, 52, 52),move1
 	,ScaleMode.StretchToFill, true, 100.0F);
 	
 	
-	GUI.Box(Rect( (Screen.width/2)-30 ,Screen.height-60,60,60), move2);
-	GUI.DrawTexture(new Rect((Screen.width/2)-26,Screen.height-56,92, 117),move1
+	GUI.Box(Rect( (Screen.width/2)-30 ,Screen.height-60,60,60),"");
+	GUI.DrawTexture(new Rect((Screen.width/2)-26,Screen.height-56, 52, 52),move2
 	,ScaleMode.StretchToFill, true, 100.0F);
 	
 	
-	GUI.Box(Rect( (Screen.width/2)+30 ,Screen.height-60,60,60), move3);
-	GUI.DrawTexture(new Rect((Screen.width/2)+26,Screen.height-56,92, 117),move1
+	GUI.Box(Rect( (Screen.width/2)+30 ,Screen.height-60,60,60),"");
+	GUI.DrawTexture(new Rect((Screen.width/2)+34,Screen.height-56, 52, 52),move3
 	,ScaleMode.StretchToFill, true, 100.0F);
 	
 	
-	GUI.Box(Rect( (Screen.width/2)+90 ,Screen.height-125,100,125),"");//, rightHand);
-	GUI.DrawTexture(new Rect( (Screen.width/2)+94 ,Screen.height-121,92, 117),rightHand
+	GUI.Box(Rect( (Screen.width/2)+90 ,Screen.height-125,100,125),"");
+	GUI.DrawTexture(new Rect( (Screen.width/2)+94 ,Screen.height-121, 92, 117),rightHand
 	,ScaleMode.StretchToFill, true, 100.0F);
 	
 	

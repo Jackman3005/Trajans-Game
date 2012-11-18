@@ -1,13 +1,13 @@
 #pragma strict
 
 var GUI:InGameGUI;
-var player : GameObject;
+var player   : GameObject;
 var threeCam : GameObject;
 var AllowMouseMovement:boolean;
 var holdW:boolean;
 var walking:AudioClip;
 var running:AudioClip;
-var idle :AudioClip;
+var idle   :AudioClip;
 
 function Start () 
 {
@@ -65,26 +65,11 @@ function Update ()
 			audio.Play();
 			player.animation.Play("walk");
 		}
-
-	/*	if(player.transform.position.y > 52 && Input.GetKeyUp("space"))
-		{
-			audio.Stop();
-			player.animation.Play("idle");
-		}*/
 	}
 	else
 	{
 		
 	}
-	
-	
-	/*if(player.transform.position.y < 52 && Input.anyKeyDown == false)
-	{
-	//	player.animation.Play("walk");
-		player.animation.Play("idle");
-	}*/
-	
-
 }
 
 function Death()
