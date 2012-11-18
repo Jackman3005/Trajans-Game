@@ -4,6 +4,11 @@ static var guiMode:String = "InGame";
 var EnemiesDefeated:int;
 var levelTotal:int;
 //var player : GameObject; 
+var leftHand:Texture2D;
+var move1:Texture;
+var move2:Texture;
+var move3:Texture;
+var rightHand:Texture2D;
 
 function start()
 {
@@ -22,7 +27,11 @@ function Update()
 
 function OnGUI()
 {
-
+	GUI.Box(Rect( (Screen.width/2)-190,Screen.height-125,100,125), leftHand);
+	GUI.Box(Rect( (Screen.width/2)-90 ,Screen.height-60,60,60), move1);
+	GUI.Box(Rect( (Screen.width/2)-30 ,Screen.height-60,60,60), move2);
+	GUI.Box(Rect( (Screen.width/2)+30 ,Screen.height-60,60,60), move3);
+	GUI.Box(Rect( (Screen.width/2)+90 ,Screen.height-125,100,125), rightHand);
 	
 	if(guiMode == "Paused")
 	{
