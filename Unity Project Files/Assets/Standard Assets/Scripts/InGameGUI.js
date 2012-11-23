@@ -4,11 +4,15 @@ static var guiMode:String = "InGame";
 var EnemiesDefeated:int;
 var levelTotal:int;
 //var player : GameObject; 
-var leftHand:Texture2D;
 var move1:Texture;
 var move2:Texture;
 var move3:Texture;
-var rightHand:Texture2D;
+
+//Possible Weapons
+var MedievalBlade:Texture2D;
+
+static var toDrawLeft:String;
+static var toDrawRight:String;
 
 function start()
 {
@@ -28,9 +32,6 @@ function Update()
 function OnGUI()
 {
 	GUI.Box(Rect( (Screen.width/2)-190,Screen.height-125,100,125),"");
-	GUI.DrawTexture(new Rect((Screen.width/2)-186,Screen.height-121,92, 117),leftHand
-	,ScaleMode.StretchToFill, true, 100.0F);
-	
 	
 	GUI.Box(Rect( (Screen.width/2)-90 ,Screen.height-60,60,60),"");
 	GUI.DrawTexture(new Rect((Screen.width/2)-86,Screen.height-56, 52, 52),move1
@@ -48,8 +49,41 @@ function OnGUI()
 	
 	
 	GUI.Box(Rect( (Screen.width/2)+90 ,Screen.height-125,100,125),"");
-	GUI.DrawTexture(new Rect( (Screen.width/2)+94 ,Screen.height-121, 92, 117),rightHand
-	,ScaleMode.StretchToFill, true, 100.0F);
+
+	
+	//Draw Weapons
+	if(toDrawLeft == "MedievalBlade")
+	{
+		GUI.DrawTexture(new Rect((Screen.width/2)-186,Screen.height-121,92, 117), MedievalBlade
+		,ScaleMode.StretchToFill, true, 100.0F);
+	}
+	else if(toDrawRight == "MedievalBlade")
+	{
+		GUI.DrawTexture(new Rect( (Screen.width/2)+94 ,Screen.height-121, 92, 117), MedievalBlade
+		,ScaleMode.StretchToFill, true, 100.0F);
+	}
+	
+	if(toDrawLeft == "Weapon2")
+	{
+		GUI.DrawTexture(new Rect((Screen.width/2)-186,Screen.height-121,92, 117), MedievalBlade
+		,ScaleMode.StretchToFill, true, 100.0F);
+	}
+	else if(toDrawRight == "Weapon2")
+	{
+		GUI.DrawTexture(new Rect( (Screen.width/2)+94 ,Screen.height-121, 92, 117), MedievalBlade
+		,ScaleMode.StretchToFill, true, 100.0F);
+	}
+	
+	if(toDrawLeft == "Weapon3")
+	{
+		GUI.DrawTexture(new Rect((Screen.width/2)-186,Screen.height-121,92, 117), MedievalBlade
+		,ScaleMode.StretchToFill, true, 100.0F);
+	}
+	else if(toDrawRight == "Weapon3")
+	{
+		GUI.DrawTexture(new Rect( (Screen.width/2)+94 ,Screen.height-121, 92, 117), MedievalBlade
+		,ScaleMode.StretchToFill, true, 100.0F);
+	}
 	
 	
 	if(guiMode == "Paused")
