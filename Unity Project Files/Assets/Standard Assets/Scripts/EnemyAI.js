@@ -30,8 +30,8 @@ function Update () {
 	var playerZ : double = player.transform.position.z;
 	var direction : Vector3 = new Vector3(playerX - transform.position.x,playerY - transform.position.y, playerZ - transform.position.z);
 	
-	var rotation = transform.rotation;
-	rotation.SetLookRotation(player.transform.position);
+	 var rotation : Quaternion = new Quaternion();
+   	rotation.SetLookRotation(direction);
 	transform.rotation.y = rotation.y;
 
 	playerIsAttackable = direction.magnitude <= attackRange;
