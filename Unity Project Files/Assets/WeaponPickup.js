@@ -21,7 +21,16 @@ function Start () {
 }
 
 function Update () {
-	
+//RayCaster For Reticle********************************************************
+	// Get the ray going through the center of the screen
+    var ray : Ray = camera.ViewportPointToRay (Vector3(0.5,0.5,0));
+    // Do a raycast
+    var hit : RaycastHit;
+    if (Physics.Raycast (ray, hit))
+        print ("I'm looking at " + hit.transform.name);
+    else
+        print ("I'm looking at nothing!");
+//*****************************************************************************
 	if(selectedWeapon == "MedievalBlade")
 	{	
 		weaponNum=0;

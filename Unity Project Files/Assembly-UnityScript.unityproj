@@ -46,6 +46,7 @@
   <ItemGroup>
      <Compile Include="Assets\Inventory.js" />
      <Compile Include="Assets\PlayerIcon.js" />
+     <Compile Include="Assets\Reticle.js" />
      <Compile Include="Assets\WeaponPickup.js" />
      <Compile Include="Assets\gatewayTrigger.js" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />

@@ -1,5 +1,10 @@
 #pragma strict
 
+//Reticle vars
+var crosshairTexture : Texture2D;
+var position : Rect;
+static var Reticle:boolean = true;
+
 var healthGUI : GUIStyle;
 
 var move1:Texture;
@@ -18,13 +23,29 @@ static var toDrawRight:String;
 static var leftEquipped:boolean = false;
 static var rightEquipped:boolean = false;
 
+function Update()
+{
+//Reticle**********************************************************************
+	if(Input.GetKeyDown(KeyCode.Tab))
+		Reticle = !Reticle;
+
+    position = Rect((Screen.width - crosshairTexture.width) / 2
+    , (Screen.height - crosshairTexture.height) /2, crosshairTexture.width
+    , crosshairTexture.height);
+//*****************************************************************************
+}
+
 function OnGUI()
 {
+	//Reticle
+	if(Reticle)
+        GUI.DrawTexture(position, crosshairTexture);
+
 	//Health Bar
 	GUI.Label(new Rect( (Screen.width/2)-88, Screen.height-82, 176, 20)
 	,Player.currentHealth +"/" + Player.maximumHealth , healthGUI);
 	
-//Weapon and Specials Display******************************************************************
+//Weapon and Specials Display**************************************************
 	GUI.Box(Rect( (Screen.width/2)-190,Screen.height-125,100,125),"");
 	
 	GUI.Box(Rect( (Screen.width/2)-90 ,Screen.height-60,60,60),"");
