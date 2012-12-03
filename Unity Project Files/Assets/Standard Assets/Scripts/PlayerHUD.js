@@ -5,6 +5,11 @@ var crosshairTexture : Texture2D;
 var position : Rect;
 static var Reticle:boolean = true;
 
+/*freeze camera
+var cam1 = GameObject.FindGameObjectWithTag("MainCamera").camera;
+var cam3 = GameObject.FindGameObjectWithTag("3rd Perspective").camera;
+var saveMouse;*/
+
 var healthGUI : GUIStyle;
 
 var move1:Texture;
@@ -23,17 +28,40 @@ static var toDrawRight:String;
 static var leftEquipped:boolean = false;
 static var rightEquipped:boolean = false;
 
+
 function Update()
 {
 //Reticle**********************************************************************
 	if(Input.GetKeyDown(KeyCode.Tab))
 		Reticle = !Reticle;
+		
+	if(!PlayerController.threeCam.camera.enabled)
+		Reticle = true;
+	else
+		Reticle = false;
 
     position = Rect((Screen.width - crosshairTexture.width) / 2
     , (Screen.height - crosshairTexture.height) /2, crosshairTexture.width
     , crosshairTexture.height);
 //*****************************************************************************
-}
+
+//freeze Camera on pause*******************************************************
+/* Disables and re-enables camera on pause, but position isn't saved, so always staring at feet
+		if(InGameGUI.guiMode =="Paused")
+		{
+			
+			GameObject.FindGameObjectWithTag("MainCamera").GetComponent("MouseLook").camera.enabled = false;
+			//saveMouse = Event.current.mousePosition;
+		}
+		if(InGameGUI.guiMode == "InGame")
+		{
+		//Event.current.mousePosition = saveMouse;
+			GameObject.FindGameObjectWithTag("MainCamera").GetComponent("MouseLook").camera.enabled = true;
+		}
+*/
+//*****************************************************************************
+
+}//end of update
 
 function OnGUI()
 {

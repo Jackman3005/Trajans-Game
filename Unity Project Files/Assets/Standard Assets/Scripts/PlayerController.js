@@ -2,7 +2,7 @@
 
 var GUI:InGameGUI;
 var player   : GameObject;
-var threeCam : GameObject;
+static var threeCam : GameObject;
 var AllowMouseMovement:boolean;
 var walking:AudioClip;
 var running:AudioClip;
@@ -35,8 +35,20 @@ function Update ()
 {
  	if(Input.GetKeyDown(KeyCode.Tab))
 	{
-			threeCam.camera.enabled = !threeCam.camera.enabled;
+		threeCam.camera.enabled = !threeCam.camera.enabled;
 	}
+	
+	if(Input.GetMouseButtonDown(1))
+	{
+		threeCam.camera.enabled = false;
+	}
+	
+	if(Input.GetMouseButtonUp(1))
+	{
+		threeCam.camera.enabled = true;
+	}
+	
+
 
 	checkIfOnGround();
 
