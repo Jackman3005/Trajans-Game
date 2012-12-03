@@ -38,9 +38,14 @@ function Update()
 function OnGUI()
 {
 	//Reticle
-	if(Reticle)
+	if(Reticle && InGameGUI.guiMode == "InGame")
+	{
         GUI.DrawTexture(position, crosshairTexture);
-
+        Screen.showCursor = false; 
+	}
+	else
+		Screen.showCursor = true;
+		
 	//Health Bar
 	GUI.Label(new Rect( (Screen.width/2)-88, Screen.height-82, 176, 20)
 	,Player.currentHealth +"/" + Player.maximumHealth , healthGUI);
