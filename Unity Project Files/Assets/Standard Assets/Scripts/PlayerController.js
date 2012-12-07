@@ -17,6 +17,12 @@ enum AnimState {idle,walking,running,jumping};
 var currAnimState : AnimState = AnimState.idle;
 var lastAnimState : AnimState = AnimState.idle;
 
+//RayCaster For Reticle********************************************************
+	// Get the ray going through the center of the screen
+    var ray : Ray; 
+    // Do a raycast
+    var hit : RaycastHit;
+//*****************************************************************************
 function Start () 
 {
 	AllowMouseMovement = true;
@@ -29,16 +35,13 @@ function Start ()
 	
 	
 	f_lastY = transform.position.y;
+	ray = camera.ViewportPointToRay (Vector3(0.5,0.5,0));
 }
 
 function Update ()
 {
 
 //RayCaster For Reticle********************************************************
-	// Get the ray going through the center of the screen
-    var ray : Ray = camera.ViewportPointToRay (Vector3(0.5,0.5,0));
-    // Do a raycast
-    var hit : RaycastHit;
     if (Physics.Raycast (ray, hit))
         print ("I'm looking at " + hit.transform.name);
     else
