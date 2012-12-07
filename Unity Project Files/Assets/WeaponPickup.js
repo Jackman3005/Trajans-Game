@@ -24,7 +24,7 @@ function Update () {
 
 	if(selectedWeapon == weapon[0])
 	{	
-		weaponNum=0;
+		weaponNum = 0;
 		
 		if((Input.GetKeyDown(KeyCode.Keypad1)||Input.GetKeyDown(KeyCode.Alpha1))
 		&& !leftEquipped)
