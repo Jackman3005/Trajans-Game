@@ -31,8 +31,20 @@ function Start ()
 	f_lastY = transform.position.y;
 }
 
-function Update () 
+function Update ()
 {
+
+//RayCaster For Reticle********************************************************
+	// Get the ray going through the center of the screen
+    var ray : Ray = camera.ViewportPointToRay (Vector3(0.5,0.5,0));
+    // Do a raycast
+    var hit : RaycastHit;
+    if (Physics.Raycast (ray, hit))
+        print ("I'm looking at " + hit.transform.name);
+    else
+        print ("I'm looking at nothing!");
+//*****************************************************************************
+
  	if(Input.GetKeyDown(KeyCode.Tab))
 	{
 		threeCam.camera.enabled = !threeCam.camera.enabled;

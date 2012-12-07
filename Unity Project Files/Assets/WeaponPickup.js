@@ -3,35 +3,26 @@
 static var selectedWeapon:String;
 
 //variables for weapons
-var medievalBlade : GameObject;
-var weapon2 : GameObject;
-var weapon3 : GameObject;
+private var medievalBlade : GameObject;
+private var weapon2 : GameObject;
+private var weapon3 : GameObject;
 
 //once equipped, can't un-equip- MIGHT CHANGE THIS
 static var leftEquipped:boolean = false;
 static var rightEquipped:boolean = false;
 
-var weapon=["Medieval Blade","Weapon2","Weapon3"];
+var weapon=["MedievalBlade","Weapon2","Weapon3"];
 var weaponNum:int;//stores array value
 
 function Start () {
-	medievalBlade = GameObject.FindGameObjectWithTag("MedievalBlade");
-	weapon2       = GameObject.FindGameObjectWithTag("Weapon2");
-	weapon3       = GameObject.FindGameObjectWithTag("Weapon3");
+	medievalBlade = GameObject.FindGameObjectWithTag(weapon[0]);
+	weapon2       = GameObject.FindGameObjectWithTag(weapon[1]);
+	//weapon3       = GameObject.FindGameObjectWithTag(weapon[2]);
 }
 
 function Update () {
-//RayCaster For Reticle********************************************************
-	// Get the ray going through the center of the screen
-    var ray : Ray = camera.ViewportPointToRay (Vector3(0.5,0.5,0));
-    // Do a raycast
-    var hit : RaycastHit;
-    if (Physics.Raycast (ray, hit))
-        print ("I'm looking at " + hit.transform.name);
-    else
-        print ("I'm looking at nothing!");
-//*****************************************************************************
-	if(selectedWeapon == "MedievalBlade")
+
+	if(selectedWeapon == weapon[0])
 	{	
 		weaponNum=0;
 		
@@ -52,7 +43,7 @@ function Update () {
 			rightEquipped = true;
 		}
 	}
-	else if(selectedWeapon == "Weapon2")
+	else if(selectedWeapon == weapon[1])
 	{	
 		weaponNum=1;
 		
@@ -73,9 +64,9 @@ function Update () {
 			rightEquipped = true;
 		}
 	}
-	else if(selectedWeapon == "Weapon3")
+	else if(selectedWeapon == weapon[2])
 	{
-		weaponNum=3;
+		weaponNum=2;
 		
 		if((Input.GetKeyDown(KeyCode.Keypad1)||Input.GetKeyDown(KeyCode.Alpha1))
 		&& !leftEquipped)
@@ -110,17 +101,17 @@ function OnTriggerExit(other:Collider){
 }
 
 function OnGUI(){
-	if(selectedWeapon == "MedievalBlade")
+	if(selectedWeapon == weapon[0])
 	{
 		GUI.Label(Rect((Screen.width/2)-50,Screen.height-500,(Screen.width/2)-250,Screen.height-150),
 		"Equip " + weapon[weaponNum] +"?\n\nPress 1 for LeftHand Equip\nPress 5 for RightHand Equip");
 	}
-	else if(selectedWeapon == "Weapon2")
+	else if(selectedWeapon == weapon[1])
 	{
 		GUI.Label(Rect((Screen.width/2)-50,Screen.height-500,(Screen.width/2)-250,Screen.height-150),
 		"Equip " + weapon[weaponNum] +"?\n\nPress 1 for LeftHand Equip\nPress 5 for RightHand Equip");
 	}
-	else if(selectedWeapon == "Weapon3")
+	else if(selectedWeapon == weapon[2])
 	{
 		GUI.Label(Rect((Screen.width/2)-50,Screen.height-500,(Screen.width/2)-250,Screen.height-150),
 		"Equip " + weapon[weaponNum] +"?\n\nPress 1 for LeftHand Equip\nPress 5 for RightHand Equip");

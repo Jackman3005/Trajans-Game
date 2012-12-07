@@ -18,8 +18,8 @@ function reduceHealthEachSecond(){
 	}
 }
 
-function Update () {
-
+function Update () 
+{
 	if (currentHealth > maximumHealth){
 		currentHealth = maximumHealth;
 	}
