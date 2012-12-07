@@ -1,11 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\WeaponPickup.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Standard Assets\Scripts\EnemyAI.js">
     <Files>
+      <File FileName="Assets\Standard Assets\Scripts\EnemyAI.js" Line="93" Column="36" />
       <File FileName="Assets\WeaponPickup.js" Line="55" Column="18" />
       <File FileName="Assets\Standard Assets\Scripts\PlayerController.js" Line="38" Column="55" />
-      <File FileName="Assets\Standard Assets\Scripts\PlayerHUD.js" Line="67" Column="2" />
-      <File FileName="Assets\Standard Assets\Scripts\Player.js" Line="1" Column="1" />
+      <File FileName="Assets\Standard Assets\Scripts\PlayerHUD.js" Line="57" Column="4" />
+      <File FileName="Assets\Standard Assets\Scripts\Player.js" Line="32" Column="1" />
       <File FileName="Assets\Standard Assets\Scripts\InGameGUI.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>

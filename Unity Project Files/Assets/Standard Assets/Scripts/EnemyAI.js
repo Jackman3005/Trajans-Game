@@ -1,5 +1,8 @@
 #pragma strict
 
+static var currentHealth : int;
+static var maximumHealth : int = 50;
+
 public var movementSpeed : double = 1;
 public var attackSpeed : double = 1;
 public var attackDamage : double = 5;
@@ -32,6 +35,7 @@ function tryToAttackPlayer(){
 
 
 function Start () {
+	currentHealth = maximumHealth;
 	player = GameObject.FindGameObjectWithTag("Player");
 	timeSinceLastAttack = attackSpeed;
 }
@@ -42,6 +46,12 @@ function Update () {
 	tryToAttackPlayer();
 	if (PlayerIsInRangeAndSight()){
 		FollowAndLookAtPlayer();
+	}
+	if (currentHealth > maximumHealth){
+		currentHealth = maximumHealth;
+	}
+	if (currentHealth < 0){
+		currentHealth = 0;
 	}
 	
 }
@@ -75,4 +85,11 @@ function FollowAndLookAtPlayer(){
     if (Physics.Raycast (transform.position, Vector3.forward, hit)) {
         Debug.Log(hit.collider.gameObject.tag);
     }
+}
+
+static function addHealth(changeInHealth : int){
+	currentHealth = currentHealth + changeInHealth;	
+		if(currentHealth <= 0){
+			Destroy(this);//on death, disappear
+	}
 }
