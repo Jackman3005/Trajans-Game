@@ -66,11 +66,11 @@ function Update ()
         		var vectorToEnemy : Vector3;
 	        	if (Input.GetMouseButtonDown(0)){
 	        		vectorToEnemy = hit.transform.position - transform.position;
-	        		weaponControllerScript.tryToAttackWithLeftWeapon(enemyAIScript, vectorToEnemy.magnitude);
+	        		weaponControllerScript.tryToAttackWithMainHandWeapon(enemyAIScript, vectorToEnemy.magnitude);
 	        	}
 	        	if (Input.GetMouseButtonDown(1)){
 	        		vectorToEnemy = hit.transform.position - transform.position;
-	        		weaponControllerScript.tryToAttackWithRightWeapon(enemyAIScript, vectorToEnemy.magnitude);
+	        		weaponControllerScript.tryToAttackWithOffHandWeapon(enemyAIScript, vectorToEnemy.magnitude);
 	        	}
         	}
         }

@@ -1,26 +1,63 @@
 #pragma strict
 
-private var currentMainHandWeapon : GameObject = null;
-private var currentOffHandWeapon : GameObject = null;
-private var currentMainHandWeaponScript : WeaponScript = null;
-private var currentOffHandWeaponScript : WeaponScript = null;
+public var currentMainHandWeapon : GameObject = null;
+public var currentOffHandWeapon : GameObject = null;
+private var currentMainHandWeaponScript : WeaponScript;
+private var currentOffHandWeaponScript : WeaponScript;
 private var isHoldingTwoHandedWeapon : boolean = false;
 
-function tryToAttackWithLeftWeapon(enemyAIScript : EnemyAI, distanceToEnemy : double){
-	if (distanceToEnemy < 5){
-		enemyAIScript.addHealth(-2);
+private var timeSinceLastMainHandAttack : double = 0;
+private var timeSinceLastOffHandAttack : double = 0;
+
+function Start() {
+		currentMainHandWeaponScript = currentMainHandWeapon.GetComponent(WeaponScript);
+		currentOffHandWeaponScript = currentOffHandWeapon.GetComponent(WeaponScript);
+}
+
+function Update(){
+	timeSinceLastMainHandAttack += Time.deltaTime;
+	timeSinceLastOffHandAttack += Time.deltaTime;
+}
+
+function tryToAttackWithMainHandWeapon(enemyAIScript : EnemyAI, distanceToEnemy : double){
+	if (currentMainHandWeaponScript != null){
+		if (timeSinceLastMainHandAttack >= ( 1/ currentMainHandWeaponScript.attacksPerSecond)){
+			if (distanceToEnemy <= currentMainHandWeaponScript.attackRange){
+				enemyAIScript.addHealth(-currentMainHandWeaponScript.attackDamage);
+				timeSinceLastMainHandAttack = 0;
+			}
+		}
 	}
 }
 
-function tryToAttackWithRightWeapon(enemyAIScript : EnemyAI, distanceToEnemy : double){
-		enemyAIScript.addHealth(-1);
-}
+function tryToAttackWithOffHandWeapon(enemyAIScript : EnemyAI, distanceToEnemy : double){
+	if (isHoldingTwoHandedWeapon){
+		tryToAttackWithMainHandWeapon(enemyAIScript, distanceToEnemy);
+	}
+	else if (currentOffHandWeaponScript != null){
+		if (timeSinceLastOffHandAttack >= ( 1/ currentOffHandWeaponScript.attacksPerSecond)){
+			if (distanceToEnemy <= currentOffHandWeaponScript.attackRange){
+				enemyAIScript.addHealth(-currentOffHandWeaponScript.attackDamage);
+				timeSinceLastOffHandAttack = 0;
+			}
+		}
+	}
+}	
+
 
 function assignMainHandWeapon (weapon : GameObject){
 	if (currentMainHandWeapon == null){
-		currentMainHandWeapon = weapon;
+		
 		currentMainHandWeaponScript = weapon.GetComponent(WeaponScript);
-		isHoldingTwoHandedWeapon = currentMainHandWeaponScript.isTwoHanded;
+		if (currentMainHandWeaponScript.isTwoHanded && currentOffHandWeapon == null){
+			currentMainHandWeapon = weapon;
+			isHoldingTwoHandedWeapon = currentMainHandWeaponScript.isTwoHanded;
+		}
+		else{
+			currentMainHandWeaponScript = null;
+		}
+		
+		timeSinceLastMainHandAttack = 1 / currentMainHandWeaponScript.attacksPerSecond;
 	}
 }
 
@@ -34,10 +71,13 @@ function assignOffHandWeapon (weapon : GameObject){
 			currentMainHandWeaponScript = currentOffHandWeaponScript;
 			currentOffHandWeaponScript = null;
 			isHoldingTwoHandedWeapon = true;
+			
+			timeSinceLastMainHandAttack = 1 / currentMainHandWeaponScript.attacksPerSecond;
 		}
 		else {
 			//If the weapon is not a two-handed weapon then equip it.
 			currentOffHandWeapon = weapon;
+			timeSinceLastOffHandAttack = 1 / currentOffHandWeaponScript.attacksPerSecond;
 		}
 	}
 }
