@@ -18,6 +18,8 @@ function Start () {
 	medievalBlade = GameObject.FindGameObjectWithTag(weapon[0]);
 	weapon2       = GameObject.FindGameObjectWithTag(weapon[1]);
 	//weapon3       = GameObject.FindGameObjectWithTag(weapon[2]);
+	
+	selectedWeapon = "";
 }
 
 function Update () {
