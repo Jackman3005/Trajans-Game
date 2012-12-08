@@ -82,7 +82,7 @@ function OnTriggerEnter(col:Collider)
 {
 	if(col.gameObject.tag == "Player")
 	{
-		selectedWeapon = this.tag;
+		selectedWeapon = this.transform.parent.tag;
 		
 		if(selectedWeapon == weapon[0])
 			weaponNum = 0;
