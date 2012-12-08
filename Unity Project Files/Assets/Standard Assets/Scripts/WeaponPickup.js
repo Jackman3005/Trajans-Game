@@ -12,7 +12,7 @@ static var leftEquipped :boolean = false;
 static var rightEquipped:boolean = false;
 
 var weapon = ["MedievalBlade","Weapon2","Weapon3"];
-private var weaponNum : int;//stores array value
+private static var weaponNum : int;//stores array value
 
 function Start () {
 	medievalBlade = GameObject.FindGameObjectWithTag(weapon[0]);
@@ -94,21 +94,17 @@ function OnTriggerEnter(col:Collider)
 }
 
 function OnTriggerExit(other:Collider){
-	if(other.gameObject.tag=="Player")
-		selectedWeapon ="";
+	if(other.gameObject.tag == "Player")
+		selectedWeapon = "";
 }
 
 function OnGUI(){
 	if(selectedWeapon != "")
-	{
-		printEquip(weaponNum);
-	}
-	//else{/*no weapon selected*/}
-
+		printEquip();
 }
 
-function printEquip(selected : int)
+function printEquip()
 {
 	GUI.Label(Rect((Screen.width/2)-50,Screen.height-500,(Screen.width/2)-250,Screen.height-175),
-	"Equip " + weapon[selected] +"?\n\nPress 1 for LeftHand Equip\nPress 5 for RightHand Equip");
+	"Equip " + weapon[weaponNum] +"?\n\nPress 1 for LeftHand Equip\nPress 5 for RightHand Equip");
 }
