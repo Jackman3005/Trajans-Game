@@ -59,7 +59,11 @@ function Update ()
 		ray = firstPersonCam.camera.ViewportPointToRay (Vector3(0.5,0.5,0));
 	}
     if (Physics.Raycast (ray, hit)){
-    
+<<<<<<< origin/BrokenSkyBox
+        //print ("I'm looking at " + hit.transform.name);
+=======
+>>>>>>> local
+        
         if(hit.transform.tag.Equals("Enemy")){
         	var enemyAIScript : EnemyAI = hit.transform.gameObject.GetComponent(EnemyAI);
         	

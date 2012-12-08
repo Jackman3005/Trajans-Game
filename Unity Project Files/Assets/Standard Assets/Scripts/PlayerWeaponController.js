@@ -9,18 +9,34 @@ private var isHoldingTwoHandedWeapon : boolean = false;
 private var timeSinceLastMainHandAttack : double = 0;
 private var timeSinceLastOffHandAttack : double = 0;
 
+private var selectedUnequipedWeapon : GameObject = null;
+
 function Start() {
-	currentMainHandWeaponScript = currentMainHandWeapon.GetComponent(WeaponScript);
-	if (currentMainHandWeaponScript.isTwoHanded){
-		isHoldingTwoHandedWeapon = true;
-	}else{
-		currentOffHandWeaponScript = currentOffHandWeapon.GetComponent(WeaponScript);
-	}
+//	currentMainHandWeaponScript = currentMainHandWeapon.GetComponent(WeaponScript);
+//	if (currentMainHandWeaponScript.isTwoHanded){
+//		isHoldingTwoHandedWeapon = true;
+//	}else{
+//		currentOffHandWeaponScript = currentOffHandWeapon.GetComponent(WeaponScript);
+//	}
 }
 
 function Update(){
 	timeSinceLastMainHandAttack += Time.deltaTime;
 	timeSinceLastOffHandAttack += Time.deltaTime;
+	if (selectedUnequipedWeapon != null){	
+		if (Input.GetMouseButtonDown(0)){
+			assignMainHandWeapon(selectedUnequipedWeapon);
+		}
+		if (Input.GetMouseButtonDown(1)){
+			assignOffHandWeapon(selectedUnequipedWeapon);
+		}
+	}
+}
+
+function OnGUI(){
+	if(selectedUnequipedWeapon != null){
+		showEquipWeaponBox();
+	}
 }
 
 function tryToAttackWithMainHandWeapon(enemyAIScript : EnemyAI, distanceToEnemy : double){
@@ -53,12 +69,18 @@ function assignMainHandWeapon (weapon : GameObject){
 	if (currentMainHandWeapon == null && weapon != null){
 		
 		currentMainHandWeaponScript = weapon.GetComponent(WeaponScript);
-		if (currentMainHandWeaponScript.isTwoHanded && currentOffHandWeapon == null){
-			currentMainHandWeapon = weapon;
-			isHoldingTwoHandedWeapon = currentMainHandWeaponScript.isTwoHanded;
+		if (currentMainHandWeaponScript.isTwoHanded){
+			if (currentOffHandWeapon == null){
+				currentMainHandWeapon = weapon;
+				isHoldingTwoHandedWeapon = currentMainHandWeaponScript.isTwoHanded;
+			}
+			else{
+				currentMainHandWeaponScript = null;
+			}
 		}
 		else{
-			currentMainHandWeaponScript = null;
+			currentMainHandWeapon = weapon;
+			isHoldingTwoHandedWeapon = currentMainHandWeaponScript.isTwoHanded;
 		}
 		
 		timeSinceLastMainHandAttack = 1 / currentMainHandWeaponScript.attacksPerSecond;
@@ -85,6 +107,25 @@ function assignOffHandWeapon (weapon : GameObject){
 		}
 	}
 }
+
+function alertPlayerThatWeaponCanBePickedUp(weapon : GameObject){
+	if (weapon != currentOffHandWeapon && weapon != currentMainHandWeapon){
+		selectedUnequipedWeapon = weapon;	
+	}
+}
+
+function weaponHasLeftPickupRange(weapon : GameObject){
+	if (weapon == selectedUnequipedWeapon){
+		selectedUnequipedWeapon = null;
+	}
+}
+
+function showEquipWeaponBox(){
+	var weaponScript : WeaponScript = selectedUnequipedWeapon.GetComponent(WeaponScript);
+	GUI.Label(Rect((Screen.width/2)-50,Screen.height-500,(Screen.width/2)-200,Screen.height-175),
+	"Equip " + weaponScript.weaponName + "?\n\nLeft Click for MainHand Equip\nRight Click for OffHand Equip");
+}
+
 
 function dropMainHandWeapon (){
 	currentMainHandWeapon = null;
@@ -114,4 +155,41 @@ function getOffHandWeaponTexture(){
 		return currentOffHandWeaponScript.weaponImage;
 	}
 	return null;
+}
+
+
+
+function canAttackWithMainHandWeapon(distToEnemy : double){
+	if (currentMainHandWeaponScript != null){
+		return distToEnemy <= currentMainHandWeaponScript.attackRange;
+	}
+	return false;
+}
+function canAttackWithOffHandWeapon(distToEnemy : double){
+	if (currentOffHandWeaponScript != null){
+		return distToEnemy <= currentOffHandWeaponScript.attackRange;
+	}
+	return false;
+}
+
+function getCooldownPercentageForMainHand(){
+	if (currentMainHandWeaponScript != null){
+		var cooldownPercent : double = timeSinceLastMainHandAttack / (1/currentMainHandWeaponScript.attacksPerSecond);
+		if (cooldownPercent > 1){
+			cooldownPercent = 1;
+		}
+		return cooldownPercent;
+	}
+	return 1;
+}
+
+function getCooldownPercentageForOffHand(){
+	if (currentOffHandWeaponScript != null){
+		var cooldownPercent : double = timeSinceLastOffHandAttack / (1/currentOffHandWeaponScript.attacksPerSecond);
+		if (cooldownPercent > 1){
+			cooldownPercent = 1;
+		}
+		return cooldownPercent;
+	}
+	return 1;
 }
