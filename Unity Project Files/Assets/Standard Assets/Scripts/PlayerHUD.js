@@ -12,6 +12,7 @@ var saveMouse;*/
 
 var healthGUI : GUIStyle;
 private var playerScript : Player;
+private var playerWeaponControllerScript : PlayerWeaponController;
 
 var move1:Texture;
 var move2:Texture;
@@ -33,7 +34,9 @@ static var rightEquipped:boolean = false;
 
 
 function Start (){
-	playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent(Player);
+	var player : GameObject = GameObject.FindGameObjectWithTag("Player");
+	playerScript = player.GetComponent(Player);
+	playerWeaponControllerScript = player.GetComponent(PlayerWeaponController);
 }
 
 function Update()
@@ -95,36 +98,16 @@ function OnGUI()
 	
 	GUI.Box(Rect( (Screen.width/2)+90 ,Screen.height-125,100,125),"");
 	
-//Draw Weapons*****************************************************************
-	if(toDrawLeft == "MedievalBlade")
-	{
-		drawLeftHand(MedievalBlade);
-	}
-	else if(toDrawRight == "MedievalBlade")
-	{
-		drawRightHand(MedievalBlade);
-	}
 	
-	if(toDrawLeft == "Weapon2")
-	{
-		drawLeftHand(Weapon2);
-	}
-	else if(toDrawRight == "Weapon2")
-	{
-		drawRightHand(Weapon2);
-	}
+	var mainHandWeaponTexture : Texture2D = playerWeaponControllerScript.getMainHandWeaponTexture();
+	var offHandWeaponTexture : Texture2D = playerWeaponControllerScript.getOffHandWeaponTexture();
 	
-	if(toDrawLeft == "Weapon3")
-	{
-		drawLeftHand(Weapon3);
+	if (mainHandWeaponTexture != null){
+		drawLeftHand(mainHandWeaponTexture);
 	}
-	else if(toDrawRight == "Weapon3")
-	{
-		drawRightHand(Weapon3);
+	if (offHandWeaponTexture != null){
+		drawRightHand(offHandWeaponTexture);
 	}
-	
-//Draw Moves*******************************************************************
-
 }
 
 function drawLeftHand(chosen : Texture2D)
