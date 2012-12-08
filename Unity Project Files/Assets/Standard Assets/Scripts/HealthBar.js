@@ -9,8 +9,8 @@
 
        var enemy : GameObject = GameObject.Find(transform.root.name);
        enemyAIScript = enemy.GetComponent(EnemyAI);
-       
-       maxHealthBarWidth = transform.renderer.bounds.size.z;
+       var strangeFudgeFactor : double = .25;
+       maxHealthBarWidth = transform.renderer.bounds.size.z-strangeFudgeFactor;
        
     }
 
@@ -19,12 +19,12 @@
     function Update()
     {
       var maxHealth : double = enemyAIScript.maximumHealth;
-      var currHealth : double = enemyAIScript.currentHealth;
+      var currHealth : double = enemyAIScript.getCurrentHealth();
       
       var healthPercentage : double = currHealth / maxHealth;
       
       transform.localScale.z = healthPercentage;
       
-      transform.localPosition.z = (maxHealthBarWidth - (maxHealthBarWidth * healthPercentage))/2;
+      transform.localPosition.z = (maxHealthBarWidth - (maxHealthBarWidth * healthPercentage))/2.0;
       
     }

@@ -2,11 +2,15 @@
 
 var GUI:InGameGUI;
 var player   : GameObject;
-static var threeCam : GameObject;
+var threeCam : GameObject;
+var firstPersonCam : GameObject;
 var AllowMouseMovement:boolean;
+var currentlyIn3rdPerson : boolean;
 var walking:AudioClip;
 var running:AudioClip;
 var idle   :AudioClip;
+
+private var weaponControllerScript : PlayerWeaponController;
 
 private var youAreOnTheGround : boolean = true;
 private var f_height : double;
@@ -29,40 +33,68 @@ function Start ()
 	GUI = GameObject.FindWithTag("GUI").GetComponent(InGameGUI);
 	player = GameObject.FindGameObjectWithTag("Player");
 	threeCam = GameObject.FindGameObjectWithTag("3rd Perspective");
-	threeCam.camera.enabled = false;
+	firstPersonCam = GameObject.FindGameObjectWithTag("MainCamera");
+	weaponControllerScript = player.GetComponent(PlayerWeaponController);
+	
+	
+	currentlyIn3rdPerson = false;
+	threeCam.camera.enabled = currentlyIn3rdPerson;
 	//holdW = false;
 	player.animation.Play("idle");
 	
 	
 	f_lastY = transform.position.y;
-	ray = camera.ViewportPointToRay (Vector3(0.5,0.5,0));
+	
 }
 
 function Update ()
 {
 
 //RayCaster For Reticle********************************************************
-    if (Physics.Raycast (ray, hit))
+	if (threeCam.camera.enabled){
+		ray = threeCam.camera.ViewportPointToRay(Vector3(0.5,0.5,0));
+	}
+	else{
+		ray = firstPersonCam.camera.ViewportPointToRay (Vector3(0.5,0.5,0));
+	}
+    if (Physics.Raycast (ray, hit)){
         print ("I'm looking at " + hit.transform.name);
-    else
-        print ("I'm looking at nothing!");
+        
+        if(hit.transform.tag.Equals("Enemy")){
+        	var enemyAIScript : EnemyAI = hit.transform.gameObject.GetComponent(EnemyAI);
+        	if (enemyAIScript != null){
+        		var vectorToEnemy : Vector3;
+	        	if (Input.GetMouseButtonDown(0)){
+	        		vectorToEnemy = hit.transform.position - transform.position;
+	        		weaponControllerScript.tryToAttackWithLeftWeapon(enemyAIScript, vectorToEnemy.magnitude);
+	        	}
+	        	if (Input.GetMouseButtonDown(1)){
+	        		vectorToEnemy = hit.transform.position - transform.position;
+	        		weaponControllerScript.tryToAttackWithRightWeapon(enemyAIScript, vectorToEnemy.magnitude);
+	        	}
+        	}
+        }
+    }
+        
+    
 //*****************************************************************************
 
  	if(Input.GetKeyDown(KeyCode.Tab))
 	{
+		currentlyIn3rdPerson = !currentlyIn3rdPerson;
 		threeCam.camera.enabled = !threeCam.camera.enabled;
 	}
-	
-	if(Input.GetMouseButtonDown(1))
-	{
-		threeCam.camera.enabled = false;
+	if (currentlyIn3rdPerson){
+		if(Input.GetKeyDown(KeyCode.LeftShift))
+		{
+			threeCam.camera.enabled = false;
+		}
+		
+		if(Input.GetKeyUp(KeyCode.LeftShift))
+		{
+			threeCam.camera.enabled = true;
+		}
 	}
-	
-	if(Input.GetMouseButtonUp(1))
-	{
-		threeCam.camera.enabled = true;
-	}
-	
 
 
 	checkIfOnGround();

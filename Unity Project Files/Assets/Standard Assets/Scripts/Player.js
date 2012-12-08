@@ -1,17 +1,17 @@
 #pragma strict
 
-static var currentHealth : int;
-static var maximumHealth : int = 100;
+var currentHealth : int;
+var maximumHealth : int = 100;
 
-private static var playerIsDead : boolean;
+private var playerIsDead : boolean;
 
 function Start () {
 	currentHealth = maximumHealth;
 	playerIsDead = false;
-	//reduceHealthEachSecond();
+	//reduceHealthEachSecondForTesting();
 }
 
-function reduceHealthEachSecond(){
+function reduceHealthEachSecondForTesting(){
 	while(currentHealth > 0){
 		yield WaitForSeconds(1);
 		addHealth(-1);
@@ -29,7 +29,7 @@ function Update ()
 
 }
 
-static function addHealth(changeInHealth : int){
+function addHealth(changeInHealth : int){
 	currentHealth = currentHealth + changeInHealth;	
 		if(currentHealth <= 0){
 			this.playerIsDead = true;
@@ -37,6 +37,6 @@ static function addHealth(changeInHealth : int){
 	}
 }
 
-static function isPlayerDead(){
+function isPlayerDead(){
 	return playerIsDead;
 }

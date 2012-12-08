@@ -3,7 +3,7 @@
 //Reticle vars
 var crosshairTexture : Texture2D;
 var position : Rect;
-static var Reticle:boolean = true;
+var Reticle:boolean = true;
 
 /*freeze camera
 var cam1 = GameObject.FindGameObjectWithTag("MainCamera").camera;
@@ -11,6 +11,7 @@ var cam3 = GameObject.FindGameObjectWithTag("3rd Perspective").camera;
 var saveMouse;*/
 
 var healthGUI : GUIStyle;
+private var playerScript : Player;
 
 var move1:Texture;
 var move2:Texture;
@@ -21,6 +22,8 @@ var MedievalBlade:Texture2D;
 var Weapon2      :Texture2D;
 var Weapon3      :Texture2D;
 
+
+
 static var toDrawLeft :String;
 static var toDrawRight:String;
 
@@ -29,16 +32,13 @@ static var leftEquipped :boolean = false;
 static var rightEquipped:boolean = false;
 
 
+function Start (){
+	playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent(Player);
+}
+
 function Update()
 {
-//Reticle**********************************************************************
-	if(Input.GetKeyDown(KeyCode.Tab))
-		Reticle = !Reticle;
-		
-	if(!PlayerController.threeCam.camera.enabled)
-		Reticle = true;
-	else
-		Reticle = false;
+
 
     position = Rect((Screen.width - crosshairTexture.width) / 2
     , (Screen.height - crosshairTexture.height) /2, crosshairTexture.width
@@ -76,7 +76,7 @@ function OnGUI()
 		
 	//Health Bar
 	GUI.Label(new Rect( (Screen.width/2)-88, Screen.height-82, 176, 20)
-	,Player.currentHealth +"/" + Player.maximumHealth , healthGUI);
+	,playerScript.currentHealth +"/" + playerScript.maximumHealth , healthGUI);
 	
 //Weapon and Specials Box Displays*********************************************
 	GUI.Box(Rect( (Screen.width/2)-190,Screen.height-125,100,125),"");
