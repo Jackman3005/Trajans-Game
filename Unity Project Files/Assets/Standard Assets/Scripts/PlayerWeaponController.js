@@ -2,16 +2,20 @@
 
 public var currentMainHandWeapon : GameObject = null;
 public var currentOffHandWeapon : GameObject = null;
-private var currentMainHandWeaponScript : WeaponScript;
-private var currentOffHandWeaponScript : WeaponScript;
+private var currentMainHandWeaponScript : WeaponScript = null;
+private var currentOffHandWeaponScript : WeaponScript = null;
 private var isHoldingTwoHandedWeapon : boolean = false;
 
 private var timeSinceLastMainHandAttack : double = 0;
 private var timeSinceLastOffHandAttack : double = 0;
 
 function Start() {
-		currentMainHandWeaponScript = currentMainHandWeapon.GetComponent(WeaponScript);
+	currentMainHandWeaponScript = currentMainHandWeapon.GetComponent(WeaponScript);
+	if (currentMainHandWeaponScript.isTwoHanded){
+		isHoldingTwoHandedWeapon = true;
+	}else{
 		currentOffHandWeaponScript = currentOffHandWeapon.GetComponent(WeaponScript);
+	}
 }
 
 function Update(){
@@ -46,7 +50,7 @@ function tryToAttackWithOffHandWeapon(enemyAIScript : EnemyAI, distanceToEnemy :
 
 
 function assignMainHandWeapon (weapon : GameObject){
-	if (currentMainHandWeapon == null){
+	if (currentMainHandWeapon == null && weapon != null){
 		
 		currentMainHandWeaponScript = weapon.GetComponent(WeaponScript);
 		if (currentMainHandWeaponScript.isTwoHanded && currentOffHandWeapon == null){
@@ -62,7 +66,7 @@ function assignMainHandWeapon (weapon : GameObject){
 }
 
 function assignOffHandWeapon (weapon : GameObject){
-	if (currentOffHandWeapon == null && !isHoldingTwoHandedWeapon){
+	if (currentOffHandWeapon == null && !isHoldingTwoHandedWeapon && weapon != null){
 		currentOffHandWeaponScript = weapon.GetComponent(WeaponScript);
 		if (currentOffHandWeaponScript.isTwoHanded && currentMainHandWeapon == null){
 			//If the weapon to be picked up is two-handed and we don't already have a mainhand weapon
