@@ -24,33 +24,33 @@ function Update () {
 
 	if(selectedWeapon == weapon[0])
 	{	
-		if(Input.GetKeyDown(KeyCode.Alpha1)) && !leftEquipped)
+		if(Input.GetKeyDown(KeyCode.Alpha1) && !leftEquipped)
 		{
 			drawWeapons(medievalBlade, true);
 		}
-		else if(Input.GetKeyDown(KeyCode.Alpha5)) && !rightEquipped)
+		else if(Input.GetKeyDown(KeyCode.Alpha5) && !rightEquipped)
 		{
 			drawWeapons(medievalBlade, false);
 		}
 	}
 	else if(selectedWeapon == weapon[1])
 	{	
-		if(Input.GetKeyDown(KeyCode.Alpha1)) && !leftEquipped)
+		if(Input.GetKeyDown(KeyCode.Alpha1) && !leftEquipped)
 		{
 			drawWeapons(weapon2, true);
 		}
-		else if(Input.GetKeyDown(KeyCode.Alpha5)) && !rightEquipped)
+		else if(Input.GetKeyDown(KeyCode.Alpha5) && !rightEquipped)
 		{
 			drawWeapons(weapon2, false);
 		}
 	}
 	else if(selectedWeapon == weapon[2])
 	{
-		if(Input.GetKeyDown(KeyCode.Alpha1)) && !leftEquipped)
+		if(Input.GetKeyDown(KeyCode.Alpha1) && !leftEquipped)
 		{
 			drawWeapons(weapon3, true);
 		}
-		else if(Input.GetKeyDown(KeyCode.Alpha5)) && !rightEquipped)
+		else if(Input.GetKeyDown(KeyCode.Alpha5) && !rightEquipped)
 		{
 			drawWeapons(weapon3, false);
 		}
