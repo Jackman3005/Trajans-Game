@@ -22,7 +22,7 @@ var move3:Texture;
 var MedievalBlade:Texture2D;
 var Weapon2      :Texture2D;
 var Weapon3      :Texture2D;
-
+var Red          :Texture2D;
 
 
 static var toDrawLeft :String;
@@ -32,6 +32,9 @@ static var toDrawRight:String;
 static var leftEquipped :boolean = false;
 static var rightEquipped:boolean = false;
 
+//for border around weapons
+static var leftIndicator :boolean = false;
+static var rightIndicator:boolean = false;
 
 function Start (){
 	var player : GameObject = GameObject.FindGameObjectWithTag("Player");
@@ -41,8 +44,6 @@ function Start (){
 
 function Update()
 {
-
-
     position = Rect((Screen.width - crosshairTexture.width) / 2
     , (Screen.height - crosshairTexture.height) /2, crosshairTexture.width
     , crosshairTexture.height);
@@ -100,7 +101,17 @@ function OnGUI()
 	
 	
 	var mainHandWeaponTexture : Texture2D = playerWeaponControllerScript.getMainHandWeaponTexture();
-	var offHandWeaponTexture : Texture2D = playerWeaponControllerScript.getOffHandWeaponTexture();
+	var offHandWeaponTexture  : Texture2D = playerWeaponControllerScript.getOffHandWeaponTexture();
+	
+	if(leftIndicator && leftEquipped)
+	{
+		drawLeftColor();
+	}
+	
+	if(rightIndicator && rightEquipped)
+	{
+		drawRightColor();	
+	}
 	
 	if (mainHandWeaponTexture != null){
 		drawLeftHand(mainHandWeaponTexture);
@@ -112,16 +123,28 @@ function OnGUI()
 
 function drawLeftHand(chosen : Texture2D)
 {
-		GUI.DrawTexture(new Rect((Screen.width/2)-186,Screen.height-121,92, 117), chosen
-		,ScaleMode.StretchToFill, true, 100.0F);
-		
-		leftEquipped = true;
+	GUI.DrawTexture(new Rect((Screen.width/2)-183,Screen.height-118,86, 111), chosen
+	,ScaleMode.StretchToFill, true, 100.0F);
+	
+	leftEquipped = true;
+}
+
+function drawLeftColor()
+{
+	GUI.DrawTexture(new Rect((Screen.width/2)-186,Screen.height-121,92, 117), Red
+	,ScaleMode.StretchToFill, true, 100.0F);
 }
 
 function drawRightHand(chosen : Texture2D)
 {
-		GUI.DrawTexture(new Rect( (Screen.width/2)+94 ,Screen.height-121, 92, 117), chosen
-		,ScaleMode.StretchToFill, true, 100.0F);
-		
-		rightEquipped = true;
+	GUI.DrawTexture(new Rect( (Screen.width/2)+97 ,Screen.height-118, 86, 111), chosen
+	,ScaleMode.StretchToFill, true, 100.0F);
+	
+	rightEquipped = true;
+}
+
+function drawRightColor()
+{
+	GUI.DrawTexture(new Rect( (Screen.width/2)+94 ,Screen.height-121, 92, 117), Red
+	,ScaleMode.StretchToFill, true, 100.0F);
 }

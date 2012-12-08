@@ -66,8 +66,10 @@
      <Compile Include="Assets\Standard Assets\Scripts\PlayerController.js" />
      <Compile Include="Assets\Standard Assets\Scripts\PlayerHUD.js" />
      <Compile Include="Assets\Standard Assets\Scripts\PlayerIcon.js" />
+     <Compile Include="Assets\Standard Assets\Scripts\PlayerWeaponController.js" />
      <Compile Include="Assets\Standard Assets\Scripts\Reticle.js" />
      <Compile Include="Assets\Standard Assets\Scripts\WeaponPickup.js" />
+     <Compile Include="Assets\Standard Assets\Scripts\WeaponScript.js" />
      <Compile Include="Assets\Standard Assets\Scripts\gatewayTrigger.js" />
      <Compile Include="Assets\Standard Assets\Scripts\setTag.js" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />

@@ -1,11 +1,12 @@
 #pragma strict
 
 var GUI:InGameGUI;
-var player   : GameObject;
-var threeCam : GameObject;
-var firstPersonCam : GameObject;
-var AllowMouseMovement:boolean;
+private var player   : GameObject;
+private var threeCam : GameObject;
+private var firstPersonCam : GameObject;
+var AllowMouseMovement   : boolean;
 var currentlyIn3rdPerson : boolean;
+var canAttackEnemy		 : boolean;
 var walking:AudioClip;
 var running:AudioClip;
 var idle   :AudioClip;
@@ -14,7 +15,7 @@ private var weaponControllerScript : PlayerWeaponController;
 
 private var youAreOnTheGround : boolean = true;
 private var f_height : double;
-private var f_lastY : double;
+private var f_lastY  : double;
 public var layerMask : LayerMask; 
 
 enum AnimState {idle,walking,running,jumping};
@@ -35,7 +36,7 @@ function Start ()
 	threeCam = GameObject.FindGameObjectWithTag("3rd Perspective");
 	firstPersonCam = GameObject.FindGameObjectWithTag("MainCamera");
 	weaponControllerScript = player.GetComponent(PlayerWeaponController);
-	
+	canAttackEnemy = false;
 	
 	currentlyIn3rdPerson = false;
 	threeCam.camera.enabled = currentlyIn3rdPerson;
@@ -58,10 +59,17 @@ function Update ()
 		ray = firstPersonCam.camera.ViewportPointToRay (Vector3(0.5,0.5,0));
 	}
     if (Physics.Raycast (ray, hit)){
-        print ("I'm looking at " + hit.transform.name);
+        //print ("I'm looking at " + hit.transform.name);
         
         if(hit.transform.tag.Equals("Enemy")){
         	var enemyAIScript : EnemyAI = hit.transform.gameObject.GetComponent(EnemyAI);
+        	
+        	canAttackEnemy = false;
+        	
+        	//Weapon borders will glow
+        	PlayerHUD.leftIndicator  = true;
+			PlayerHUD.rightIndicator = true;
+        	
         	if (enemyAIScript != null){
         		var vectorToEnemy : Vector3;
 	        	if (Input.GetMouseButtonDown(0)){
@@ -73,6 +81,13 @@ function Update ()
 	        		weaponControllerScript.tryToAttackWithOffHandWeapon(enemyAIScript, vectorToEnemy.magnitude);
 	        	}
         	}
+        }
+        else
+        {
+        	canAttackEnemy = false;
+        	
+        	PlayerHUD.leftIndicator  = false;
+			PlayerHUD.rightIndicator = false;
         }
     }
         
