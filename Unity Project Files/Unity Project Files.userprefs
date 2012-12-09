@@ -1,11 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Standard Assets\Scripts\PlayerHUD.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerHUD.js">
     <Files>
-      <File FileName="Assets\Standard Assets\Scripts\PlayerController.js" Line="62" Column="11" />
-      <File FileName="Assets\Standard Assets\Scripts\WeaponPickup.js" Line="15" Column="16" />
-      <File FileName="Assets\Standard Assets\Scripts\EnemyAI.js" Line="55" Column="21" />
-      <File FileName="Assets\Standard Assets\Scripts\PlayerHUD.js" Line="110" Column="2" />
+      <File FileName="Assets\Scripts\PlayerHUD.js" Line="153" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
