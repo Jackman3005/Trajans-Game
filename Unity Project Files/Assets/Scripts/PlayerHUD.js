@@ -19,25 +19,20 @@ var move2:Texture;
 var move3:Texture;
 var Red          :Texture2D;
 
+var moveSize    :int = 52;
+var moveBox     :int = 60;
+var movex       :int = 56;
+var weaponBoxHeight:int = 125;
+var weaponBoxWidth :int = 100;
+var texturePosition:int = 118;
+var textureWidth :int = 86;
+var textureHeight:int = 111;
+var colorPosition:int = 121;
+var colorWidth   :int = 92;
+var colorHeight  :int = 117;
 
 static var toDrawLeft :String;
 static var toDrawRight:String;
-
-//Sizes for Textures
-var weaponx     :int = Screen.height-118;;
-var movex       :int = Screen.height-56;
-var weaponColorx:int = Screen.height-123;
-var boxx        :int = Screen.height-125;
-
-var boxHeight   :int = 125;
-var boxWidth    :int = 100;
-var weaponHeight:int = 111;
-var weaponWidth :int = 86;
-var moveSize    :int = 52;
-var moveBoxSize :int = moveBoxSize;
-var weaponColorHeight:int = 119;
-var weaponColorWidth :int = 94;
-
 
 //for border around weapons
 static var leftIndicator :boolean = false;
@@ -90,64 +85,67 @@ function OnGUI()
 	,playerScript.currentHealth +"/" + playerScript.maximumHealth , healthGUI);
 	
 //Weapon and Specials Box Displays*********************************************
-	GUI.Box(Rect( (Screen.width/2)-190,boxx,boxWidth,boxHeight),"");
+	GUI.Box(Rect( (Screen.width/2)-190,Screen.height-weaponBoxHeight,weaponBoxWidth,weaponBoxHeight),"");
 	
-	GUI.Box(Rect( (Screen.width/2)-90 ,Screen.height-moveBoxSize,moveBoxSize,moveBoxSize),"");
-	GUI.DrawTexture(new Rect((Screen.width/2)-86,movex, moveSize, moveSize),move1
+	GUI.Box(Rect( (Screen.width/2)-90 ,Screen.height-moveBox, moveBox, moveBox),"");
+	GUI.DrawTexture(new Rect((Screen.width/2)-86,Screen.height-movex, moveSize, moveSize),move1
 	,ScaleMode.StretchToFill, true, 100.0F);
 	
-	GUI.Box(Rect( (Screen.width/2)-30 ,Screen.height-moveBoxSize,moveBoxSize,moveBoxSize),"");
-	GUI.DrawTexture(new Rect((Screen.width/2)-26,movex, moveSize, moveSize),move2
+	GUI.Box(Rect( (Screen.width/2)-30 ,Screen.height-moveBox, moveBox, moveBox),"");
+	GUI.DrawTexture(new Rect((Screen.width/2)-26,Screen.height-movex, moveSize, moveSize),move2
 	,ScaleMode.StretchToFill, true, 100.0F);
 	
-	GUI.Box(Rect( (Screen.width/2)+30 ,Screen.height-moveBoxSize,moveBoxSize,moveBoxSize),"");
-	GUI.DrawTexture(new Rect((Screen.width/2)+34,movex, moveSize, moveSize),move3
+	GUI.Box(Rect( (Screen.width/2)+30 ,Screen.height-moveBox, moveBox, moveBox),"");
+	GUI.DrawTexture(new Rect((Screen.width/2)+34,Screen.height-movex, moveSize, moveSize),move3
 	,ScaleMode.StretchToFill, true, 100.0F);
 	
-	GUI.Box(Rect( (Screen.width/2)+90 ,boxx,boxWidth,boxHeight),"");
+	GUI.Box(Rect( (Screen.width/2)+90 ,Screen.height-weaponBoxHeight,weaponBoxWidth,weaponBoxHeight),"");
 	
 	
 	var mainHandWeaponTexture : Texture2D = playerWeaponControllerScript.getMainHandWeaponTexture();
 	var offHandWeaponTexture  : Texture2D = playerWeaponControllerScript.getOffHandWeaponTexture();
 	
 	if (mainHandWeaponTexture != null){
-		drawLeftHand(mainHandWeaponTexture);
 		if (leftIndicator){
 			drawLeftColor();
 		}
+		drawLeftHand(mainHandWeaponTexture);
 	}
 	if (offHandWeaponTexture != null){
-		drawRightHand(offHandWeaponTexture);
 		if(rightIndicator){
 			drawRightColor();	
 		}
+		drawRightHand(offHandWeaponTexture);
 	}
 }
 
 function drawLeftHand(chosen : Texture2D)
 {
-	GUI.DrawTexture(new Rect((Screen.width/2)-183,weaponx,weaponWidth, weaponHeight), chosen
+	GUI.DrawTexture(new Rect((Screen.width/2)-183,Screen.height-texturePosition,
+	textureWidth, textureHeight), chosen
 	,ScaleMode.StretchToFill, true, 100.0F);
-	
-	leftEquipped = true;
+}
+
+
+function drawRightHand(chosen : Texture2D)
+{
+	GUI.DrawTexture(new Rect( (Screen.width/2)+97 ,Screen.height-texturePosition,
+	 textureWidth, textureHeight), chosen
+	,ScaleMode.StretchToFill, true, 100.0F);
 }
 
 function drawLeftColor()
 {
-	GUI.DrawTexture(new Rect((Screen.width/2)-188,weaponColorx,weaponColorWidth, weaponColorHeight), Red
+	GUI.DrawTexture(new Rect((Screen.width/2)-186,Screen.height-colorPosition,
+	colorWidth, colorHeight), Red
 	,ScaleMode.StretchToFill, true, 100.0F);
 }
 
-function drawRightHand(chosen : Texture2D)
-{
-	GUI.DrawTexture(new Rect( (Screen.width/2)+97 ,weaponx, weaponWidth, weaponHeight), chosen
-	,ScaleMode.StretchToFill, true, 100.0F);
-	
-	rightEquipped = true;
-}
 
 function drawRightColor()
 {
-	GUI.DrawTexture(new Rect( (Screen.width/2)+92 ,weaponColorx, weaponColorWidth, weaponColorHeight), Red
+	GUI.DrawTexture(new Rect( (Screen.width/2)+94 ,Screen.height-colorPosition,
+	colorWidth, colorHeight), Red
 	,ScaleMode.StretchToFill, true, 100.0F);
 }
+
