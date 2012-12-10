@@ -17,12 +17,17 @@ private var f_height : double;
 private var f_lastY  : double;
 public var layerMask : LayerMask; 
 
+private var animator: Animator;
+private var DirectionDampTime:float = .25f;
+
 enum AnimState {idle,walking,running,jumping};
 var currAnimState : AnimState = AnimState.idle;
 var lastAnimState : AnimState = AnimState.idle;
 
+
 function Start () 
 {
+	animator = this.GetComponent(Animator);
 	GUI = GameObject.FindWithTag("GUI").GetComponent(InGameGUI);
 	player = GameObject.FindGameObjectWithTag("Player");
 	threeCam = GameObject.FindGameObjectWithTag("3rd Perspective");
@@ -90,6 +95,15 @@ function Update ()
     checkIfLookingAtEnemyAndAttackIfMouseClicked();
     
 //*****************************************************************************
+	animator.SetBool("Jump",    Input.GetButton("Fire1"));
+	animator.SetBool("Running", Input.GetButton("Fire2")||Input.GetButton("Fire2")&&Input.GetKeyDown(KeyCode.W));
+	
+	var h:float = Input.GetAxis ("Horizontal");
+	var v:float = Input.GetAxis ("Vertical");
+		
+	animator.SetFloat("Speed", h*h+v*v);
+	animator.SetFloat("Direction", h, DirectionDampTime, Time.deltaTime);
+//*****************************************************************************
 
  	if(Input.GetKeyDown(KeyCode.Tab))
 	{
@@ -97,12 +111,12 @@ function Update ()
 		threeCam.camera.enabled = !threeCam.camera.enabled;
 	}
 	if (currentlyIn3rdPerson){
-		if(Input.GetKeyDown(KeyCode.LeftShift))
+		if(Input.GetKeyDown(KeyCode.LeftControl))
 		{
 			threeCam.camera.enabled = false;
 		}
 		
-		if(Input.GetKeyUp(KeyCode.LeftShift))
+		if(Input.GetKeyUp(KeyCode.LeftControl))
 		{
 			threeCam.camera.enabled = true;
 		}
@@ -151,6 +165,7 @@ function Update ()
 			case AnimState.jumping:
 				audio.Stop();
 				//player.animation.Play("jump_pose");
+				//animator.SetBool("Running", Input.GetButton("Fire2"));
 				break;
 			default:
 				break;
