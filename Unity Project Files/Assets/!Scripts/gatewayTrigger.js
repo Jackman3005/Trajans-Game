@@ -2,10 +2,11 @@
 
 
 public var move : AudioClip;
-
-private var totalHeightToRaiseDoor : double = 9;
-private var maxDoorY : double;
+public var isArmoryGate : boolean = false;
 public var secondsToOpenDoor : double;
+
+private var maxDoorY : double;
+private var totalHeightToRaiseDoor : double = 9;
 
 enum DoorMode {closed,closing,open,opening};
 private var currDoorState : DoorMode;
@@ -14,11 +15,22 @@ private var origX : double;
 private var origY : double;
 private var origZ : double;
 
+private var playerIsInCollider = false;
+
 function OnTriggerEnter (col : Collider) {
 	if (col.gameObject.tag == "Player" ) {
-		currDoorState = DoorMode.opening;
-		audio.clip = move;
-		audio.Play();
+		playerIsInCollider = true;
+		if (isArmoryGate){
+			currDoorState = DoorMode.opening;
+			audio.clip = move;
+			audio.Play();
+		}
+	}
+}
+
+function OnTriggerExit (col : Collider) {
+	if (col.gameObject.tag == "Player" ) {
+		playerIsInCollider = false;
 	}
 }
 
@@ -59,10 +71,22 @@ function Update () {
 	
 }
 
-
 function WaitThenLowerDoor(){
 		currDoorState = DoorMode.open;
 		yield WaitForSeconds(2);
 		currDoorState = DoorMode.closing;
 		audio.Play();
+}
+
+function setDoorState( doorState : DoorMode){
+	currDoorState = doorState;
+	if (doorState == DoorMode.open){
+		currDoorState = DoorMode.opening;
+		audio.clip = move;
+		audio.Play();
+	}
+}
+
+function isPlayerNearDoor(){
+	return playerIsInCollider;
 }

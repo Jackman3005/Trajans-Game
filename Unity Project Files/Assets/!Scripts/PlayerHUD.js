@@ -20,17 +20,17 @@ var move3:Texture;
 var canAttackEnemyColor :Texture2D;
 var healthBarBackground :Texture2D;
 
-var moveSize    :int = 52;
-var moveBox     :int = 60;
-var movex       :int = 56;
-var weaponBoxHeight:int = 125;
-var weaponBoxWidth :int = 100;
-var texturePosition:int = 118;
-var textureWidth :int = 86;
-var textureHeight:int = 111;
-var colorPosition:int = 121;
-var colorWidth   :int = 92;
-var colorHeight  :int = 117;
+private var moveSize    :int = 52;
+private var moveBox     :int = 60;
+private var movex       :int = 56;
+private var weaponBoxHeight:int = 125;
+private var weaponBoxWidth :int = 100;
+private var texturePosition:int = 118;
+private var textureWidth :int = 86;
+private var textureHeight:int = 111;
+private var colorPosition:int = 121;
+private var colorWidth   :int = 92;
+private var colorHeight  :int = 117;
 
 static var toDrawLeft :String;
 static var toDrawRight:String;
@@ -76,6 +76,12 @@ function OnGUI()
 	if(Reticle && InGameGUI.guiMode == "InGame")
 	{
         GUI.DrawTexture(position, crosshairTexture);
+		Screen.lockCursor = true;
+		Screen.showCursor = false;
+	}
+	else{
+		Screen.lockCursor = false;
+		Screen.showCursor = true;
 	}
 		
 	//Health Bar Background
@@ -83,7 +89,6 @@ function OnGUI()
 	,ScaleMode.StretchToFill);
 	//Health Bar Red Color
 	var healthBarWidth : int = 176 * ((playerScript.currentHealth*1.0) / playerScript.maximumHealth);
-	print(healthBarWidth);
 	GUI.DrawTexture(new Rect((Screen.width/2)-88, Screen.height-82, healthBarWidth, 20),canAttackEnemyColor
 	,ScaleMode.StretchToFill);
 	//Health Bar Text
