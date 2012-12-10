@@ -95,8 +95,7 @@ function FollowAndLookAtPlayer(){
 function addHealth(changeInHealth : int){
 	currentHealth += changeInHealth;	
 		if(currentHealth <= 0){
-			var detonator : Detonator = GetComponent(Detonator);
-			detonator.Explode();
+
 			Destroy(self);//on death, disappear
 	}
 }

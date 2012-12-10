@@ -17,7 +17,8 @@ private var playerWeaponControllerScript : PlayerWeaponController;
 var move1:Texture;
 var move2:Texture;
 var move3:Texture;
-var Red          :Texture2D;
+var canAttackEnemyColor :Texture2D;
+var healthBarBackground :Texture2D;
 
 var moveSize    :int = 52;
 var moveBox     :int = 60;
@@ -75,14 +76,21 @@ function OnGUI()
 	if(Reticle && InGameGUI.guiMode == "InGame")
 	{
         GUI.DrawTexture(position, crosshairTexture);
-        Screen.showCursor = false; 
 	}
-	else
-		Screen.showCursor = true;
 		
-	//Health Bar
+	//Health Bar Background
+	GUI.DrawTexture(new Rect((Screen.width/2)-88, Screen.height-82, 176, 20),healthBarBackground
+	,ScaleMode.StretchToFill);
+	//Health Bar Red Color
+	var healthBarWidth : int = 176 * ((playerScript.currentHealth*1.0) / playerScript.maximumHealth);
+	print(healthBarWidth);
+	GUI.DrawTexture(new Rect((Screen.width/2)-88, Screen.height-82, healthBarWidth, 20),canAttackEnemyColor
+	,ScaleMode.StretchToFill);
+	//Health Bar Text
 	GUI.Label(new Rect( (Screen.width/2)-88, Screen.height-82, 176, 20)
 	,playerScript.currentHealth +"/" + playerScript.maximumHealth , healthGUI);
+	
+
 	
 //Weapon and Specials Box Displays*********************************************
 	GUI.Box(Rect( (Screen.width/2)-190,Screen.height-weaponBoxHeight,weaponBoxWidth,weaponBoxHeight),"");
@@ -137,7 +145,7 @@ function drawRightHand(chosen : Texture2D)
 function drawLeftColor()
 {
 	GUI.DrawTexture(new Rect((Screen.width/2)-186,Screen.height-colorPosition,
-	colorWidth, colorHeight), Red
+	colorWidth, colorHeight), canAttackEnemyColor
 	,ScaleMode.StretchToFill, true, 100.0F);
 }
 
@@ -145,7 +153,7 @@ function drawLeftColor()
 function drawRightColor()
 {
 	GUI.DrawTexture(new Rect( (Screen.width/2)+94 ,Screen.height-colorPosition,
-	colorWidth, colorHeight), Red
+	colorWidth, colorHeight), canAttackEnemyColor
 	,ScaleMode.StretchToFill, true, 100.0F);
 }
 
