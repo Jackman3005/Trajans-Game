@@ -11,7 +11,7 @@ var idle   :AudioClip;
 
 private var weaponControllerScript : PlayerWeaponController;
 
-private var youAreOnTheGround : boolean = true;
+public var youAreOnTheGround : boolean = true;
 private var f_height : double;
 private var f_lastY  : double;
 public var layerMask : LayerMask; 
@@ -88,14 +88,14 @@ function Update ()
     checkIfLookingAtEnemyAndAttackIfMouseClicked();
     
 //*****************************************************************************
-	animator.SetBool("Jump",    Input.GetButton("Fire1"));
-	animator.SetBool("Running", Input.GetButton("Fire2")||Input.GetButton("Fire2")&&Input.GetKeyDown(KeyCode.W));
+	//animator.SetBool("Jump",    Input.GetButton("Fire1"));
+	//animator.SetBool("Running", Input.GetButton("Fire2")||Input.GetButton("Fire2")&&Input.GetKeyDown(KeyCode.W));
 	
-	var h:float = Input.GetAxis ("Horizontal");
+	/*var h:float = Input.GetAxis ("Horizontal");
 	var v:float = Input.GetAxis ("Vertical");
 		
 	animator.SetFloat("Speed", h*h+v*v);
-	animator.SetFloat("Direction", h, DirectionDampTime, Time.deltaTime);
+	animator.SetFloat("Direction", h, DirectionDampTime, Time.deltaTime);*/
 //*****************************************************************************
 
  	if(Input.GetKeyDown(KeyCode.Tab))
@@ -114,7 +114,10 @@ function Update ()
 			threeCam.camera.enabled = true;
 		}
 	}
-
+	
+	//Backup plan for jumping
+	/*if(Input.GetKey(KeyCode.Space))
+		animator.SetBool("Jump", true);*/
 
 	checkIfOnGround();
 
@@ -144,21 +147,30 @@ function Update ()
 				audio.clip = idle;
 				audio.Play();
 				//player.animation.Play("idle");
+				animator.SetBool("Running", false);
+				animator.SetBool("Jump", false);
+				animator.SetFloat("Speed",0.0);
 				break;
 			case AnimState.walking:
 				audio.clip = walking;
 				audio.Play();
 				//player.animation.Play("walk");
+				animator.SetBool("Running", false);
+				animator.SetBool("Jump", false);
+				animator.SetFloat("Speed",.11);
 				break;
 			case AnimState.running:
 				audio.clip = running;
 				audio.Play();
 				//player.animation.Play("run");
+				animator.SetFloat("Speed",.11);
+				animator.SetBool("Jump", false);
+				animator.SetBool("Running", true);
 				break;
 			case AnimState.jumping:
 				audio.Stop();
 				//player.animation.Play("jump_pose");
-				//animator.SetBool("Running", Input.GetButton("Fire2"));
+				animator.SetBool("Jump", true);
 				break;
 			default:
 				break;
@@ -174,30 +186,29 @@ function Death()
  
 
 public function OnDrawGizmos() : void {
-
 	f_height = 2;  
 	var v3_right : Vector3 = new Vector3(transform.position.x + (collider.bounds.size.x*0.2), transform.position.y, transform.position.z);
-	var v3_left : Vector3 = new Vector3(transform.position.x - (collider.bounds.size.x*0.2), transform.position.y, transform.position.z);
+	var v3_left  : Vector3 = new Vector3(transform.position.x - (collider.bounds.size.x*0.2), transform.position.y, transform.position.z);
 	Gizmos.color = Color.red;
-	Gizmos.DrawRay(transform.position, transform.TransformDirection (-Vector3.up) * (f_height * 0.5));
-	Gizmos.DrawRay(v3_right, transform.TransformDirection (-Vector3.up) * (f_height * 0.5));
-	Gizmos.DrawRay(v3_left, transform.TransformDirection (-Vector3.up) * (f_height * 0.5));
+	Gizmos.DrawRay(transform.position+(Vector3.up), transform.TransformDirection (-Vector3.up) * (f_height * 0.5));
+	Gizmos.DrawRay(v3_right+(Vector3.up), transform.TransformDirection (-Vector3.up) * (f_height * 0.5));
+	Gizmos.DrawRay(v3_left+(Vector3.up), transform.TransformDirection (-Vector3.up) * (f_height * 0.5));
 }
 
 function checkIfOnGround () {
 	//Checking Jumping by using Raycast
-	var hit : RaycastHit; // in-parameter, used to get information about raycast collisions (if any)
-	var v3_hit : Vector3 = transform.TransformDirection (-Vector3.up) * (f_height * 0.5);
+	//var hit : RaycastHit; // in-parameter, used to get information about raycast collisions (if any)
+	var v3_hit   : Vector3 = transform.TransformDirection (-Vector3.up) * (f_height * 0.5);
 	var v3_right : Vector3 = new Vector3(transform.position.x + (collider.bounds.size.x*0.2), transform.position.y, transform.position.z);
-	var v3_left : Vector3 = new Vector3(transform.position.x - (collider.bounds.size.x*0.2), transform.position.y, transform.position.z);
+	var v3_left  : Vector3 = new Vector3(transform.position.x - (collider.bounds.size.x*0.2), transform.position.y, transform.position.z);
 	
-    if (Physics.Raycast (transform.position, v3_hit, hit, 1.2, layerMask.value)) { // 2.5 = length of the ray
+    if (Physics.Raycast (transform.position+(Vector3.up), v3_hit, 1.2)) { // 2.5 = length of the ray
         youAreOnTheGround = true;
-    } else if (Physics.Raycast (v3_right, v3_hit, hit, 1.2, layerMask.value)) {
+    } else if (Physics.Raycast (v3_right+(Vector3.up), v3_hit, 1.2)) {
    		if (!youAreOnTheGround) {
         	youAreOnTheGround = true;
         }
-    } else if (Physics.Raycast (v3_left, v3_hit, hit,1.2, layerMask.value)) {
+    } else if (Physics.Raycast (v3_left+(Vector3.up), v3_hit, 1.2)) {
         if (!youAreOnTheGround) {
         	youAreOnTheGround = true;
         }
