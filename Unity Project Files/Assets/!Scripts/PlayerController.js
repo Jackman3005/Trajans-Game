@@ -5,7 +5,6 @@ private var player   : GameObject;
 private var threeCam : GameObject;
 private var firstPersonCam : GameObject;
 private var currentlyIn3rdPerson : boolean;
-private var canAttackEnemy		 : boolean;
 var walking:AudioClip;
 var running:AudioClip;
 var idle   :AudioClip;
@@ -33,7 +32,6 @@ function Start ()
 	threeCam = GameObject.FindGameObjectWithTag("3rd Perspective");
 	firstPersonCam = GameObject.FindGameObjectWithTag("MainCamera");
 	weaponControllerScript = player.GetComponent(PlayerWeaponController);
-	canAttackEnemy = false;
 	
 	currentlyIn3rdPerson = false;
 	threeCam.camera.enabled = currentlyIn3rdPerson;
@@ -45,6 +43,9 @@ function Start ()
 
 function checkIfLookingAtEnemyAndAttackIfMouseClicked(){
 
+	var layerMaskForAttacking = 1 << 11;
+	layerMaskForAttacking = ~layerMaskForAttacking;
+	
 	var ray : Ray; 
     // Do a raycast
     var hit : RaycastHit;
@@ -55,36 +56,28 @@ function checkIfLookingAtEnemyAndAttackIfMouseClicked(){
 	else{
 		ray = firstPersonCam.camera.ViewportPointToRay (Vector3(0.5,0.5,0));
 	}
-    if (Physics.Raycast (ray, hit)){
-    
+    if (Physics.Raycast (ray, hit,Mathf.Infinity,layerMaskForAttacking)){
+    	print(hit.transform.name);
+    	
+    	var distanceToEnemy : double = 0;
+    	var lookingAtEnemy : boolean = false;
+    	var enemyAIScript : EnemyAI = null;
+    	
         if(hit.transform.tag.Equals("Enemy")){
-        	var enemyAIScript : EnemyAI = hit.transform.gameObject.GetComponent(EnemyAI);
-        	
-        	canAttackEnemy = false;
-        	
-        	//Weapon borders will glow
-        	PlayerHUD.leftIndicator  = true;
-			PlayerHUD.rightIndicator = true;
-        	
-        	if (enemyAIScript != null){
-        		var vectorToEnemy : Vector3;
-	        	if (Input.GetMouseButtonDown(0)){
-	        		vectorToEnemy = hit.transform.position - transform.position;
-	        		weaponControllerScript.tryToAttackWithMainHandWeapon(enemyAIScript, vectorToEnemy.magnitude);
-	        	}
-	        	if (Input.GetMouseButtonDown(1)){
-	        		vectorToEnemy = hit.transform.position - transform.position;
-	        		weaponControllerScript.tryToAttackWithOffHandWeapon(enemyAIScript, vectorToEnemy.magnitude);
-	        	}
-        	}
+        	lookingAtEnemy = true;
+        	enemyAIScript = hit.transform.gameObject.GetComponent(EnemyAI);
+        	distanceToEnemy = (hit.transform.position - transform.position).magnitude;
         }
-        else
-        {
-        	canAttackEnemy = false;
-        	
-        	PlayerHUD.leftIndicator  = false;
-			PlayerHUD.rightIndicator = false;
-        }
+    	
+    	PlayerHUD.leftIndicator  = lookingAtEnemy && weaponControllerScript.canAttackWithMainHandWeapon(distanceToEnemy);
+		PlayerHUD.rightIndicator = lookingAtEnemy && weaponControllerScript.canAttackWithOffHandWeapon(distanceToEnemy);
+		
+		if (Input.GetMouseButtonDown(0)){
+    		weaponControllerScript.tryToAttackWithMainHandWeapon(enemyAIScript, distanceToEnemy);
+    	}
+    	if (Input.GetMouseButtonDown(1)){
+    		weaponControllerScript.tryToAttackWithOffHandWeapon(enemyAIScript, distanceToEnemy);
+    	}
     }
         
 

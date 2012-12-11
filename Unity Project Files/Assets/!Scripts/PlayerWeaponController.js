@@ -13,7 +13,10 @@ private var timeSinceLastOffHandAttack : double = 0;
 
 private var selectedUnequipedWeapon : GameObject = null;
 
+private var player : GameObject;
+
 function Start() {
+	player = GameObject.FindGameObjectWithTag("Player");
 }
 
 function Update(){
@@ -27,6 +30,7 @@ function Update(){
 			assignOffHandWeapon(selectedUnequipedWeapon);
 		}
 	}
+	
 }
 
 function OnGUI(){
@@ -47,12 +51,15 @@ function playRandomAttackSound(){
 
 
 function tryToAttackWithMainHandWeapon(enemyAIScript : EnemyAI, distanceToEnemy : double){
+
+	
 	if (currentMainHandWeaponScript != null){
 		if (timeSinceLastMainHandAttack >= ( 1/ currentMainHandWeaponScript.attacksPerSecond)){
-			if (distanceToEnemy <= currentMainHandWeaponScript.attackRange){
 				playRandomAttackSound();
-				enemyAIScript.addHealth(-currentMainHandWeaponScript.attackDamage);
+				currentMainHandWeaponScript.useWeapon();
 				timeSinceLastMainHandAttack = 0;
+			if (distanceToEnemy <= currentMainHandWeaponScript.attackRange && enemyAIScript != null){
+				enemyAIScript.addHealth(-currentMainHandWeaponScript.attackDamage);
 			}
 		}
 	}
@@ -64,10 +71,11 @@ function tryToAttackWithOffHandWeapon(enemyAIScript : EnemyAI, distanceToEnemy :
 	}
 	else if (currentOffHandWeaponScript != null){
 		if (timeSinceLastOffHandAttack >= ( 1/ currentOffHandWeaponScript.attacksPerSecond)){
-			if (distanceToEnemy <= currentOffHandWeaponScript.attackRange){
 				playRandomAttackSound();
-				enemyAIScript.addHealth(-currentOffHandWeaponScript.attackDamage);
+				currentOffHandWeaponScript.useWeapon();
 				timeSinceLastOffHandAttack = 0;
+			if (distanceToEnemy <= currentOffHandWeaponScript.attackRange && enemyAIScript != null){
+				enemyAIScript.addHealth(-currentOffHandWeaponScript.attackDamage);
 			}
 		}
 	}
@@ -81,6 +89,7 @@ function assignMainHandWeapon (weapon : GameObject){
 		if (currentMainHandWeaponScript.isTwoHanded){
 			if (currentOffHandWeapon == null){
 				currentMainHandWeapon = weapon;
+				mountMainHandWeapon(weapon);
 				isHoldingTwoHandedWeapon = currentMainHandWeaponScript.isTwoHanded;
 			}
 			else{
@@ -89,11 +98,13 @@ function assignMainHandWeapon (weapon : GameObject){
 		}
 		else{
 			currentMainHandWeapon = weapon;
+			mountMainHandWeapon(weapon);
 			isHoldingTwoHandedWeapon = currentMainHandWeaponScript.isTwoHanded;
 		}
 		
-		timeSinceLastMainHandAttack = 1 / currentMainHandWeaponScript.attacksPerSecond;
+		timeSinceLastMainHandAttack = 0;
 	}
+	selectedUnequipedWeapon = null;
 }
 
 function assignOffHandWeapon (weapon : GameObject){
@@ -103,18 +114,40 @@ function assignOffHandWeapon (weapon : GameObject){
 			//If the weapon to be picked up is two-handed and we don't already have a mainhand weapon
 			//Then instead equip the two hander to the main hand.
 			currentMainHandWeapon = weapon;
+			mountMainHandWeapon(weapon);
 			currentMainHandWeaponScript = currentOffHandWeaponScript;
 			currentOffHandWeaponScript = null;
 			isHoldingTwoHandedWeapon = true;
-			
-			timeSinceLastMainHandAttack = 1 / currentMainHandWeaponScript.attacksPerSecond;
+			timeSinceLastMainHandAttack = 0;
 		}
 		else {
 			//If the weapon is not a two-handed weapon then equip it.
 			currentOffHandWeapon = weapon;
-			timeSinceLastOffHandAttack = 1 / currentOffHandWeaponScript.attacksPerSecond;
+			mountOffHandWeapon(weapon);
+			timeSinceLastOffHandAttack = 0;
 		}
 	}
+	selectedUnequipedWeapon = null;
+}
+
+function mountMainHandWeapon(weapon : GameObject){
+	weapon.transform.parent = player.transform;
+	//Move weapon to Main Hand Location
+	weapon.transform.localPosition = new Vector3(-.3,1.1,.7);
+	//Reset weapon rotation to character rotation
+	weapon.transform.rotation = Quaternion.identity;
+	//Rotate weapon to holding spot
+	weapon.transform.Rotate(new Vector3(15,180,-20),Space.Self );
+}
+
+function mountOffHandWeapon(weapon : GameObject){
+	weapon.transform.parent = player.transform;
+	//Move weapon to Main Hand Location
+	weapon.transform.localPosition = new Vector3(.3,1.1,.7);
+	//Reset weapon rotation to character rotation
+	weapon.transform.rotation = Quaternion.identity;
+	//Rotate weapon to holding spot
+	weapon.transform.Rotate(new Vector3(15,180,-20),Space.Self );
 }
 
 function alertPlayerThatWeaponCanBePickedUp(weapon : GameObject){
@@ -175,6 +208,9 @@ function canAttackWithMainHandWeapon(distToEnemy : double){
 	return false;
 }
 function canAttackWithOffHandWeapon(distToEnemy : double){
+	if (isHoldingTwoHandedWeapon){
+		return canAttackWithMainHandWeapon(distToEnemy);
+	}
 	if (currentOffHandWeaponScript != null){
 		return distToEnemy <= currentOffHandWeaponScript.attackRange;
 	}
