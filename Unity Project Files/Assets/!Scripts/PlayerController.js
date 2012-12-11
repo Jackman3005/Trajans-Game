@@ -41,47 +41,6 @@ function Start ()
 	
 }
 
-function checkIfLookingAtEnemyAndAttackIfMouseClicked(){
-
-	var layerMaskForAttacking = 1 << 11;
-	layerMaskForAttacking = ~layerMaskForAttacking;
-	
-	var ray : Ray; 
-    // Do a raycast
-    var hit : RaycastHit;
-//RayCaster For Reticle********************************************************
-	if (threeCam.camera.enabled){
-		ray = threeCam.camera.ViewportPointToRay(Vector3(0.5,0.5,0));
-	}
-	else{
-		ray = firstPersonCam.camera.ViewportPointToRay (Vector3(0.5,0.5,0));
-	}
-    if (Physics.Raycast (ray, hit,Mathf.Infinity,layerMaskForAttacking)){
-    	print(hit.transform.name);
-    	
-    	var distanceToEnemy : double = 0;
-    	var lookingAtEnemy : boolean = false;
-    	var enemyAIScript : EnemyAI = null;
-    	
-        if(hit.transform.tag.Equals("Enemy")){
-        	lookingAtEnemy = true;
-        	enemyAIScript = hit.transform.gameObject.GetComponent(EnemyAI);
-        	distanceToEnemy = (hit.transform.position - transform.position).magnitude;
-        }
-    	
-    	PlayerHUD.leftIndicator  = lookingAtEnemy && weaponControllerScript.canAttackWithMainHandWeapon(distanceToEnemy);
-		PlayerHUD.rightIndicator = lookingAtEnemy && weaponControllerScript.canAttackWithOffHandWeapon(distanceToEnemy);
-		
-		if (Input.GetMouseButtonDown(0)){
-    		weaponControllerScript.tryToAttackWithMainHandWeapon(enemyAIScript, distanceToEnemy);
-    	}
-    	if (Input.GetMouseButtonDown(1)){
-    		weaponControllerScript.tryToAttackWithOffHandWeapon(enemyAIScript, distanceToEnemy);
-    	}
-    }
-        
-
-}
 
 function Update ()
 {
@@ -178,9 +137,46 @@ function Update ()
 	}
 }
 
-function Death()
-{
-	GUI.Lose();
+function checkIfLookingAtEnemyAndAttackIfMouseClicked(){
+
+	var layerMaskForAttacking = 1 << 11;
+	layerMaskForAttacking = ~layerMaskForAttacking;
+	
+	var ray : Ray; 
+    // Do a raycast
+    var hit : RaycastHit;
+//RayCaster For Reticle********************************************************
+	if (threeCam.camera.enabled){
+		ray = threeCam.camera.ViewportPointToRay(Vector3(0.5,0.5,0));
+	}
+	else{
+		ray = firstPersonCam.camera.ViewportPointToRay (Vector3(0.5,0.5,0));
+	}
+    if (Physics.Raycast (ray, hit,Mathf.Infinity,layerMaskForAttacking)){
+    	print(hit.transform.name);
+    	
+    	var distanceToEnemy : double = 0;
+    	var lookingAtEnemy : boolean = false;
+    	var enemyAIScript : EnemyAI = null;
+    	
+        if(hit.transform.tag.Equals("Enemy")){
+        	lookingAtEnemy = true;
+        	enemyAIScript = hit.transform.gameObject.GetComponent(EnemyAI);
+        	distanceToEnemy = (hit.transform.position - transform.position).magnitude;
+        }
+    	
+    	PlayerHUD.leftIndicator  = lookingAtEnemy && weaponControllerScript.canAttackWithMainHandWeapon(distanceToEnemy);
+		PlayerHUD.rightIndicator = lookingAtEnemy && weaponControllerScript.canAttackWithOffHandWeapon(distanceToEnemy);
+		
+		if (Input.GetMouseButtonDown(0)){
+    		weaponControllerScript.tryToAttackWithMainHandWeapon(enemyAIScript, distanceToEnemy);
+    	}
+    	if (Input.GetMouseButtonDown(1)){
+    		weaponControllerScript.tryToAttackWithOffHandWeapon(enemyAIScript, distanceToEnemy);
+    	}
+    }
+        
+
 }
 
  

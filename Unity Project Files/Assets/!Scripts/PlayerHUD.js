@@ -73,7 +73,7 @@ function Update()
 function OnGUI()
 {
 	//Reticle
-	if(Reticle && InGameGUI.guiMode == "InGame")
+	if(Reticle && RoundManager.getGameMode() == GameMode.Playing && (RoundManager.getInGameState() != InGameState.ReadyToStart))
 	{
         GUI.DrawTexture(position, crosshairTexture);
 		Screen.lockCursor = true;

@@ -9,19 +9,25 @@ private var enemyGatewayScript : gatewayTrigger;
 private var armoryGatewayScript : gatewayTrigger;
 
 
-enum GameMode {PreRound, Playing, Paused, Won, Lost};
+enum GameMode {Playing, Paused, Won, Lost};
 enum InGameState {NotStarted, ReadyToStart, Starting, InProgress, Over};
 
-private var currentGameMode : GameMode;
-private var currentInGameState : InGameState;
+private static var currentGameMode : GameMode;
+private static var currentInGameState : InGameState;
+
+private var playerScript : Player;
+
+private var nextTimeToCheckForEndOfRound : float = 0;
 
 function Start () {
-	currentGameMode = GameMode.PreRound;
+	currentGameMode = GameMode.Playing;
 	currentInGameState = InGameState.NotStarted;
 	
 	playerGatewayScript = playerGateway.GetComponentInChildren(gatewayTrigger);
 	enemyGatewayScript = enemyGateway.GetComponentInChildren(gatewayTrigger);
 	armoryGatewayScript = armoryGateway.GetComponentInChildren(gatewayTrigger);
+	
+	playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent(Player);
 }
 
 function Update () {
@@ -33,9 +39,9 @@ function Update () {
 		break;
 	case InGameState.Starting:startRound();
 		break;
-	case InGameState.InProgress:
+	case InGameState.InProgress: checkPlayerProgress();
 		break;
-	case InGameState.Over:
+	case InGameState.Over: print("ROUND HAS ENDED WOOO");
 		break;
 	default: print("In Game State could not be identified");
 		break;
@@ -44,13 +50,30 @@ function Update () {
 
 function OnGUI() {
 	if (currentInGameState == InGameState.ReadyToStart){
-		InGameGUI.guiMode = "ReadyToStart";
 		if (GUI.Button(Rect((Screen.width/2)-75,
 		(Screen.height/2)-20,150,30),"Begin Round")){
 			currentInGameState = InGameState.Starting;
 			InGameGUI.guiMode = "InGame";
 		}
 	}
+}
+
+function checkPlayerProgress(){
+
+	if (Time.time >= nextTimeToCheckForEndOfRound){
+		var allEnemiesDefeated : boolean = GameObject.FindGameObjectsWithTag("Enemy").Length == 0;	
+		
+		if (allEnemiesDefeated){
+			currentInGameState = InGameState.Over;
+			currentGameMode = GameMode.Won;
+		}
+		else if (playerScript.currentHealth <= 0){
+			currentInGameState = InGameState.Over;
+			currentGameMode = GameMode.Lost;
+		}
+		nextTimeToCheckForEndOfRound = Time.time + .5;
+	}
+	
 }
 
 function notStarted(){
@@ -67,10 +90,18 @@ function startRound(){
 	
 	playerGatewayScript.setDoorState(DoorMode.open);
 	currentInGameState = InGameState.InProgress;
+	currentGameMode = GameMode.Playing;
 	yield WaitForSeconds(1.5);
 	playerScript.playRandomTaunt();
 }
 
-function getInGameState(){
+static function getInGameState(){
 	return currentInGameState;
+}
+static function getGameMode(){
+	return currentGameMode;
+}
+
+static function setGameMode(newGameMode : GameMode){
+	currentGameMode = newGameMode;
 }
