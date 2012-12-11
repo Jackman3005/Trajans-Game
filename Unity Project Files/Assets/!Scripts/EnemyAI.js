@@ -17,7 +17,7 @@ public var fieldOfViewInDegrees : float = 60;
 public var maxDistEnemyCanSeePlayer : float = 60;
 public var distThatEnemyWillAttackPlayerWithoutSeeingThem : float = 5;
 
-
+public var enemyAttackSounds : AudioClip[];
 
 private var playerIsAttackable : boolean = false;
 
@@ -32,7 +32,7 @@ private var playerScript : Player;
 function Start () {
 	currentHealth = maximumHealth;
 	player = GameObject.FindGameObjectWithTag("Player");
-	self = GameObject.FindGameObjectWithTag(this.tag);
+	self = this.gameObject;
 	playerScript = player.GetComponent(Player);
 	timeSinceLastAttack = attackSpeed;
 
@@ -48,9 +48,22 @@ function Awake () {
 function tryToAttackPlayer(){
 	timeSinceLastAttack += Time.deltaTime;
 	if(playerIsAttackable && timeSinceLastAttack >= attackSpeed){
+		playRandomAttackSound();
 		playerScript.addHealth(-attackDamage);
 		timeSinceLastAttack = 0;
 	}
+}
+
+
+function playRandomAttackSound(){
+	var rand : Random = new Random();
+	var randSoundNumber : int = Mathf.FloorToInt(rand.value*enemyAttackSounds.Length);
+	if (randSoundNumber == enemyAttackSounds.Length){
+		randSoundNumber = enemyAttackSounds.Length -1;
+	}
+	audio.PlayOneShot(enemyAttackSounds[randSoundNumber],.3);
+	
+	
 }
 
 function Update () {
@@ -110,3 +123,5 @@ function ReduceHealthEachSecond(){
 		addHealth(-2);
 	}
 }
+
+@script RequireComponent(CharacterController)
