@@ -123,6 +123,11 @@ function OnGUI()
 			drawLeftColor();
 		}
 		drawLeftHand(mainHandWeaponTexture);
+		
+		//Draw Cooldown
+		if(playerWeaponControllerScript.getCooldownPercentageForMainHand() < 1)
+			drawLeftCoolDown();
+		
 	}
 	if (offHandWeaponTexture != null){
 		if(rightIndicator){
@@ -130,7 +135,7 @@ function OnGUI()
 		}
 		drawRightHand(offHandWeaponTexture);
 	}
-}
+}//end of OnGUI
 
 function drawLeftHand(chosen : Texture2D)
 {
@@ -154,6 +159,41 @@ function drawLeftColor()
 	,ScaleMode.StretchToFill, true, 100.0F);
 }
 
+function drawLeftCoolDown()
+{
+	var drawPoint   :int = Screen.height-weaponBoxHeight;
+	var movingHeight:int = weaponBoxHeight-(weaponBoxHeight*playerWeaponControllerScript.getCooldownPercentageForMainHand());
+	//var drawingY    :int = drawPoint - (drawPoint - playerWeaponControllerScript.getCooldownPercentageForMainHand()) + drawPoint+1;
+	var drawingY    :int = drawPoint ;//- (drawPoint -playerWeaponControllerScript.getCooldownPercentageForMainHand()) + drawPoint;
+	
+	//working, but upside down
+	//if(playerWeaponControllerScript.getCooldownPercentageForMainHand() > .1)
+		GUI.Box(Rect( (Screen.width/2)-190, drawingY
+		,weaponBoxWidth,movingHeight),"");
+	
+	//Work in progress for top-down cooldown
+	/*if(playerWeaponControllerScript.getCooldownPercentageForMainHand() > .1)
+		GUI.Box(Rect( (Screen.width/2)-190, drawingY + weaponBoxHeight - movingHeight
+		,weaponBoxWidth,movingHeight),"");*/
+}
+
+function drawRightCoolDown()
+{
+	var drawPoint   :int = Screen.height-weaponBoxHeight;
+	var movingHeight:int = weaponBoxHeight-(weaponBoxHeight*playerWeaponControllerScript.getCooldownPercentageForOffHand());
+	//var drawingY    :int = drawPoint - (drawPoint - playerWeaponControllerScript.getCooldownPercentageForMainHand()) + drawPoint+1;
+	var drawingY    :int = drawPoint ;//- (drawPoint -playerWeaponControllerScript.getCooldownPercentageForMainHand()) + drawPoint;
+	
+	//working, but upside down
+	//if(playerWeaponControllerScript.getCooldownPercentageForOffHand() > .1)
+		GUI.Box(Rect( (Screen.width/2)+90, drawingY
+		,weaponBoxWidth,movingHeight),"");
+	
+	//Work in progress for top-down cooldown
+	/*if(playerWeaponControllerScript.getCooldownPercentageForMainHand() > .1)
+		GUI.Box(Rect( (Screen.width/2)-190, drawingY + weaponBoxHeight - movingHeight
+		,weaponBoxWidth,movingHeight),"");*/
+}
 
 function drawRightColor()
 {
