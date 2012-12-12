@@ -10,7 +10,7 @@ private var armoryGatewayScript : gatewayTrigger;
 
 
 enum GameMode {Playing, Paused, Won, Lost};
-enum InGameState {NotStarted, ReadyToStart, Starting, InProgress, Over};
+enum InGameState {Intro, NotStarted, ReadyToStart, Starting, InProgress, Over};
 
 private static var currentGameMode : GameMode;
 private static var currentInGameState : InGameState;
@@ -24,7 +24,7 @@ function Start () {
 	currentInGameState = InGameState.NotStarted;
 	
 	playerGatewayScript = playerGateway.GetComponentInChildren(gatewayTrigger);
-	enemyGatewayScript = enemyGateway.GetComponentInChildren(gatewayTrigger);
+	enemyGatewayScript  = enemyGateway.GetComponentInChildren(gatewayTrigger);
 	armoryGatewayScript = armoryGateway.GetComponentInChildren(gatewayTrigger);
 	
 	playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent(Player);
@@ -104,4 +104,8 @@ static function getGameMode(){
 
 static function setGameMode(newGameMode : GameMode){
 	currentGameMode = newGameMode;
+}
+
+static function setInGameState(newInGameState : InGameState){
+	currentInGameState = newInGameState;
 }
