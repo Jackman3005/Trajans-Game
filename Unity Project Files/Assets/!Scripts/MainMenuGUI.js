@@ -20,7 +20,7 @@ function OnGUI()
 	}
 	
 	//distance from left, distance from top, width, height 
-	if(GUI.Button(Rect((Screen.width/2)-75,(Screen.height/2)+20,150,30),"New Game"))
+	if(GUI.Button(Rect((Screen.width/2)-75,(Screen.height/2)+28,150,30),"New Game"))
 	{
 		//will reset progress to level 1
 		PlayerPrefs.SetInt("PlayerLevel", 1);

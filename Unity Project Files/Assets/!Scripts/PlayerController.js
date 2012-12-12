@@ -75,15 +75,11 @@ function Update ()
 			threeCam.camera.enabled = true;
 		}
 	}
-	
-	//Backup plan for jumping
-	/*if(Input.GetKey(KeyCode.Space))
-		animator.SetBool("Jump", true);*/
 
-	checkIfOnGround();
+	//checkIfOnGround();
 
 	lastAnimState = currAnimState;
-	if(youAreOnTheGround){
+	//if(youAreOnTheGround){
 		if(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)){
 			if(Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d")){
 				currAnimState = AnimState.running;
@@ -98,10 +94,16 @@ function Update ()
 		else{
 				currAnimState = AnimState.idle;
 		}
-	}
+	/*}
 	else{
 		currAnimState = AnimState.jumping;
-	}
+	}*/
+	
+	//Backup plan for jumping, work-around for freezing animation that's fixed
+	//by turning gizmos on and off
+	if(Input.GetKeyDown(KeyCode.Space))
+		currAnimState = AnimState.jumping;
+	
 	if (currAnimState != lastAnimState){
 		switch(currAnimState){
 			case AnimState.idle:
@@ -124,7 +126,8 @@ function Update ()
 				break;
 			case AnimState.jumping:
 				playerControllerAudio.Stop();
-				animator.SetBool("Jump", true);
+				//animator.SetBool("Jump", true);
+				animator.SetBool("Jump", Input.GetButton("space"));
 				break;
 			default:
 				break;
@@ -175,7 +178,7 @@ function checkIfLookingAtEnemyAndAttackIfMouseClicked(){
 }
 
  
-
+//The drawings of this function no longer match the raycasters defined in checkIfOnGround()
 public function OnDrawGizmos() : void {
 	f_height = 2;  
 	var v3_right : Vector3 = new Vector3(transform.position.x + (collider.bounds.size.x*0.2), transform.position.y, transform.position.z);
