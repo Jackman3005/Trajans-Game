@@ -48,9 +48,9 @@ function Awake () {
 function tryToAttackPlayer(){
 	timeSinceLastAttack += Time.deltaTime;
 	if(playerIsAttackable && timeSinceLastAttack >= attackSpeed){
-		playRandomAttackSound();
 		playerScript.addHealth(-attackDamage);
 		timeSinceLastAttack = 0;
+		playRandomAttackSound();
 	}
 }
 

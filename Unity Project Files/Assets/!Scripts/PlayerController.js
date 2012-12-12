@@ -23,6 +23,8 @@ enum AnimState {idle,walking,running,jumping};
 var currAnimState : AnimState = AnimState.idle;
 var lastAnimState : AnimState = AnimState.idle;
 
+private var playerControllerAudio : AudioSource;
+
 
 function Start () 
 {
@@ -38,7 +40,7 @@ function Start ()
 	
 	
 	f_lastY = transform.position.y;
-	
+	playerControllerAudio = player.GetComponents(AudioSource)[0];
 }
 
 
@@ -103,32 +105,25 @@ function Update ()
 	if (currAnimState != lastAnimState){
 		switch(currAnimState){
 			case AnimState.idle:
-				audio.clip = idle;
-				audio.Play();
-				//player.animation.Play("idle");
+				playerControllerAudio.Stop();
 				animator.SetBool("Running", false);
 				animator.SetBool("Jump", false);
 				animator.SetFloat("Speed",0.0);
 				break;
 			case AnimState.walking:
-				audio.clip = walking;
-				audio.Play();
-				//player.animation.Play("walk");
+				playerControllerAudio.PlayOneShot(walking,.2);
 				animator.SetBool("Running", false);
 				animator.SetBool("Jump", false);
 				animator.SetFloat("Speed",.11);
 				break;
 			case AnimState.running:
-				audio.clip = running;
-				audio.Play();
-				//player.animation.Play("run");
+				playerControllerAudio.PlayOneShot(running,.2);
 				animator.SetFloat("Speed",.11);
 				animator.SetBool("Jump", false);
 				animator.SetBool("Running", true);
 				break;
 			case AnimState.jumping:
-				audio.Stop();
-				//player.animation.Play("jump_pose");
+				playerControllerAudio.Stop();
 				animator.SetBool("Jump", true);
 				break;
 			default:

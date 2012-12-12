@@ -1,7 +1,5 @@
 #pragma strict
 
-public var attackSounds : AudioClip[];
-
 public var currentMainHandWeapon : GameObject = null;
 public var currentOffHandWeapon : GameObject = null;
 private var currentMainHandWeaponScript : WeaponScript = null;
@@ -39,14 +37,8 @@ function OnGUI(){
 	}
 }
 
-function playRandomAttackSound(){
-	var rand : Random = new Random();
-	var randSoundNumber : int = Mathf.FloorToInt(rand.value*attackSounds.Length);
-	if (randSoundNumber == attackSounds.Length){
-		randSoundNumber = attackSounds.Length -1;
-	}
-	audio.PlayOneShot(attackSounds[randSoundNumber],.5);
-	
+function playAttackSound(){
+	player.GetComponent(Player).playRandomAttackSound();
 }
 
 
@@ -55,7 +47,7 @@ function tryToAttackWithMainHandWeapon(enemyAIScript : EnemyAI, distanceToEnemy 
 	
 	if (currentMainHandWeaponScript != null){
 		if (timeSinceLastMainHandAttack >= ( 1/ currentMainHandWeaponScript.attacksPerSecond)){
-				playRandomAttackSound();
+				playAttackSound();
 				currentMainHandWeaponScript.useWeapon();
 				timeSinceLastMainHandAttack = 0;
 			if (distanceToEnemy <= currentMainHandWeaponScript.attackRange && enemyAIScript != null){
@@ -71,7 +63,7 @@ function tryToAttackWithOffHandWeapon(enemyAIScript : EnemyAI, distanceToEnemy :
 	}
 	else if (currentOffHandWeaponScript != null){
 		if (timeSinceLastOffHandAttack >= ( 1/ currentOffHandWeaponScript.attacksPerSecond)){
-				playRandomAttackSound();
+				playAttackSound();
 				currentOffHandWeaponScript.useWeapon();
 				timeSinceLastOffHandAttack = 0;
 			if (distanceToEnemy <= currentOffHandWeaponScript.attackRange && enemyAIScript != null){
@@ -128,6 +120,10 @@ function assignOffHandWeapon (weapon : GameObject){
 		}
 	}
 	selectedUnequipedWeapon = null;
+}
+
+function equipTwoHander (weapon : GameObject){
+
 }
 
 function mountMainHandWeapon(weapon : GameObject){

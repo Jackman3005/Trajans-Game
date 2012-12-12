@@ -1,7 +1,7 @@
 #pragma strict
 
 
-public var move : AudioClip;
+public var doorRaiseSound : AudioClip;
 public var isArmoryGate : boolean = false;
 public var secondsToOpenDoor : double;
 
@@ -22,8 +22,7 @@ function OnTriggerEnter (col : Collider) {
 		playerIsInCollider = true;
 		if (isArmoryGate){
 			currDoorState = DoorMode.opening;
-			audio.clip = move;
-			audio.Play();
+			audio.PlayOneShot(doorRaiseSound,1);
 		}
 	}
 }
@@ -82,8 +81,7 @@ function setDoorState( doorState : DoorMode){
 	currDoorState = doorState;
 	if (doorState == DoorMode.open){
 		currDoorState = DoorMode.opening;
-		audio.clip = move;
-		audio.Play();
+		audio.PlayOneShot(doorRaiseSound,1);
 	}
 }
 

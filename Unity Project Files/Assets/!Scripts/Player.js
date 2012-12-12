@@ -4,14 +4,16 @@ var currentHealth : int;
 var maximumHealth : int = 100;
 
 public var playerTaunts : AudioClip[];
+public var attackSounds : AudioClip[];
 
 
+private var playerAudio : AudioSource;
 private var playerIsDead : boolean;
 
 function Start () {
 	currentHealth = maximumHealth;
 	playerIsDead = false;
-	//reduceHealthEachSecondForTesting();
+	playerAudio = this.gameObject.GetComponents(AudioSource)[1];
 }
 
 function reduceHealthEachSecondForTesting(){
@@ -48,9 +50,16 @@ function playRandomTaunt(){
 	if (randSoundNumber == playerTaunts.Length){
 		randSoundNumber = playerTaunts.Length -1;
 	}
-	audio.clip = playerTaunts[randSoundNumber];
-	audio.volume = .5;
-	if (!audio.isPlaying)
-		audio.Play();
+	playerAudio.PlayOneShot(playerTaunts[randSoundNumber],.6);
+	
+}
+
+function playRandomAttackSound(){
+	var rand : Random = new Random();
+	var randSoundNumber : int = Mathf.FloorToInt(rand.value*attackSounds.Length);
+	if (randSoundNumber == attackSounds.Length){
+		randSoundNumber = attackSounds.Length -1;
+	}
+	playerAudio.PlayOneShot(attackSounds[randSoundNumber],.4);
 	
 }

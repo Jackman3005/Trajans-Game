@@ -88,7 +88,7 @@ function OnGUI()
 	GUI.DrawTexture(new Rect((Screen.width/2)-88, Screen.height-82, 176, 20),healthBarBackground
 	,ScaleMode.StretchToFill);
 	//Health Bar Red Color
-	var healthBarWidth : int = 176 * ((playerScript.currentHealth*1.0) / playerScript.maximumHealth);
+	var healthBarWidth : double = 176 * ((playerScript.currentHealth*1.0) / playerScript.maximumHealth);
 	GUI.DrawTexture(new Rect((Screen.width/2)-88, Screen.height-82, healthBarWidth, 20),canAttackEnemyColor
 	,ScaleMode.StretchToFill);
 	//Health Bar Text
