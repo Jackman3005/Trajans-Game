@@ -61,7 +61,7 @@ function playRandomAttackSound(){
 	if (randSoundNumber == enemyAttackSounds.Length){
 		randSoundNumber = enemyAttackSounds.Length -1;
 	}
-	audio.PlayOneShot(enemyAttackSounds[randSoundNumber],.3);
+	audio.PlayOneShot(enemyAttackSounds[randSoundNumber],.5);
 	
 	
 }

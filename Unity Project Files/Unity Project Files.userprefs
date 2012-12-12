@@ -1,14 +1,15 @@
-<Properties>
+﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\!Scripts\PlayerController.js">
     <Files>
-      <File FileName="Assets\!Scripts\PlayerController.js" Line="212" Column="70" />
+      <File FileName="Assets\!Scripts\HealthBar.js" Line="13" Column="71" />
+      <File FileName="Assets\!Scripts\PlayerController.js" Line="202" Column="67" />
       <File FileName="Assets\!Scripts\PlayerHUD.js" Line="1" Column="1" />
-      <File FileName="Assets\!Scripts\EnemyAI.js" Line="1" Column="1" />
+      <File FileName="Assets\!Scripts\EnemyAI.js" Line="64" Column="57" />
       <File FileName="Assets\!Scripts\PlayerWeaponController.js" Line="1" Column="1" />
-      <File FileName="Assets\!Scripts\LockMouseCursor.js" Line="1" Column="1" />
       <File FileName="Assets\!Scripts\Player.js" Line="1" Column="1" />
       <File FileName="Assets\!Scripts\InGameGUI.js" Line="1" Column="1" />
+      <File FileName="Assets\!Scripts\gatewayTrigger.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

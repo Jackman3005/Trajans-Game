@@ -9,8 +9,10 @@
 
        var enemy : GameObject = GameObject.Find(transform.root.name);
        enemyAIScript = enemy.GetComponent(EnemyAI);
-       var strangeFudgeFactor : double = .25;
-       maxHealthBarWidth = transform.renderer.bounds.size.z-strangeFudgeFactor;
+       
+       maxHealthBarWidth = GetComponent(MeshFilter).mesh.bounds.size.z;
+       //var strangeFudgeFactor : double = .25;
+       //maxHealthBarWidth = transform.renderer.bounds.size.z-strangeFudgeFactor;
     }
 
     // Update is called once per frame

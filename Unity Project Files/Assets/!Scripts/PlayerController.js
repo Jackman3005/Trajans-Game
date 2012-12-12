@@ -190,16 +190,16 @@ function checkIfOnGround () {
 	//Checking Jumping by using Raycast
 	//var hit : RaycastHit; // in-parameter, used to get information about raycast collisions (if any)
 	var v3_hit   : Vector3 = transform.TransformDirection (-Vector3.up) * (f_height * 0.5);
-	var v3_right : Vector3 = new Vector3(transform.position.x + (collider.bounds.size.x*0.2), transform.position.y, transform.position.z);
-	var v3_left  : Vector3 = new Vector3(transform.position.x - (collider.bounds.size.x*0.2), transform.position.y, transform.position.z);
+	var v3_right : Vector3 = new Vector3(transform.position.x + (collider.bounds.size.x*0.3), transform.position.y, transform.position.z);
+	var v3_left  : Vector3 = new Vector3(transform.position.x - (collider.bounds.size.x*0.3), transform.position.y, transform.position.z);
 	
-    if (Physics.Raycast (transform.position+(Vector3.up), v3_hit, 1.2)) { // 2.5 = length of the ray
+    if (Physics.Raycast (transform.position+(Vector3.up), v3_hit, 1.25)) { // 2.5 = length of the ray
         youAreOnTheGround = true;
-    } else if (Physics.Raycast (v3_right+(Vector3.up), v3_hit, 1.2)) {
+    } else if (Physics.Raycast (v3_right+(Vector3.up), v3_hit, 1.25)) {
    		if (!youAreOnTheGround) {
         	youAreOnTheGround = true;
         }
-    } else if (Physics.Raycast (v3_left+(Vector3.up), v3_hit, 1.2)) {
+    } else if (Physics.Raycast (v3_left+(Vector3.up), v3_hit, 1.25)) {
         if (!youAreOnTheGround) {
         	youAreOnTheGround = true;
         }
