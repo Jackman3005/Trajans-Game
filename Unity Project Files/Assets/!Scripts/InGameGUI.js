@@ -114,34 +114,49 @@ function winGui(){
 		(Screen.height/2)-120,150,30),"You Won!", guiStyle);
 	
 		Time.timeScale = 0;
-		//Next Level
-		if(GUI.Button(Rect((Screen.width/2)-75,
-		(Screen.height/2),150,30),"Next Level"))
-		{//distance from left, distance from top, width, height
-		
-			Time.timeScale = 1;
-			RoundManager.setGameMode(GameMode.Playing);
-			Application.LoadLevel(Application.loadedLevel+1);
-			print("Next Level...");
+		if (Application.loadedLevel != 2){
+			//Next Level
+			if(GUI.Button(Rect((Screen.width/2)-75,
+			(Screen.height/2),150,30),"Next Level"))
+			{//distance from left, distance from top, width, height
+			
+				Time.timeScale = 1;
+				RoundManager.setGameMode(GameMode.Playing);
+				
+					Application.LoadLevel(Application.loadedLevel+1);
+				
+				print("Next Level...");
+			}
+			
+			//Quit
+			if(GUI.Button(Rect((Screen.width/2)-75,
+			(Screen.height/2)+40,150,30),"Quit to Main Menu"))
+			{
+				Time.timeScale = 1;
+				Application.LoadLevel(0);
+				print("Quitting To Main Menu...");
+			}
 		}
-		
-		//Quit
+		else{
+					//Quit
 		if(GUI.Button(Rect((Screen.width/2)-75,
-		(Screen.height/2)+40,150,30),"Quit to Main Menu"))
+		(Screen.height/2)+20,150,30),"Quit to Main Menu"))
 		{
 			Time.timeScale = 1;
 			Application.LoadLevel(0);
 			print("Quitting To Main Menu...");
+		}
 		}
 }
 
 function loseGui(){
 		//Display You Lost
 		var guiStyle : GUIStyle = new GUIStyle();
+		guiStyle.normal.textColor = Color.white;
 		guiStyle.fontSize = 50;
 		GUI.Label(Rect((Screen.width/2)-110,
 		(Screen.height/2)-120,150,30),"You Lost", guiStyle);
-
+	
 		Time.timeScale = 0;
 		//Next Level
 		if(GUI.Button(Rect((Screen.width/2)-75,

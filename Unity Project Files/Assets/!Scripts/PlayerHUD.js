@@ -135,6 +135,9 @@ function OnGUI()
 			drawRightColor();	
 		}
 		drawRightHand(offHandWeaponTexture);
+				//Draw Cooldown
+		if(playerWeaponControllerScript.getCooldownPercentageForOffHand() < 1)
+			drawRightCoolDown();
 	}
 }//end of OnGUI
 

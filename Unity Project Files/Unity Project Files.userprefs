@@ -1,15 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\!Scripts\MainMenuGUI.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\!Scripts\PlayerHUD.js">
     <Files>
+      <File FileName="Assets\!Scripts\InGameGUI.js" Line="150" Column="2" />
       <File FileName="Assets\!Scripts\MainMenuGUI.js" Line="23" Column="61" />
       <File FileName="Assets\!Scripts\HealthBar.js" Line="1" Column="1" />
-      <File FileName="Assets\!Scripts\PlayerController.js" Line="184" Column="92" />
-      <File FileName="Assets\!Scripts\PlayerHUD.js" Line="1" Column="1" />
+      <File FileName="Assets\!Scripts\PlayerController.js" Line="1" Column="1" />
+      <File FileName="Assets\!Scripts\PlayerHUD.js" Line="140" Column="13" />
       <File FileName="Assets\!Scripts\EnemyAI.js" Line="1" Column="1" />
       <File FileName="Assets\!Scripts\PlayerWeaponController.js" Line="1" Column="1" />
       <File FileName="Assets\!Scripts\Player.js" Line="1" Column="1" />
-      <File FileName="Assets\!Scripts\InGameGUI.js" Line="1" Column="1" />
       <File FileName="Assets\!Scripts\gatewayTrigger.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
